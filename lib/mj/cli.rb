@@ -3,6 +3,7 @@
 require "thor"
 require_relative "alternative_file/thor_command"
 require_relative "alternative_file/candidate"
+require_relative "alternative_file/current_file"
 
 module Mj
   class Cli < Thor

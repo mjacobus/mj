@@ -1,8 +1,10 @@
 # Mj
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/mj`. To experiment with that code, run `bin/console` for an interactive prompt.
+A collection of useful commands for my personal use.
 
-TODO: Delete this and the text above, and describe your gem
+[![Ruby](https://github.com/mjacobus/mj/actions/workflows/main.yml/badge.svg)](https://github.com/mjacobus/mj/actions/workflows/main.yml)
+[![Coverage Status](https://coveralls.io/repos/github/mjacobus/mj/badge.svg?branch=main)](https://coveralls.io/github/mjacobus/mj?branch=main)
+[![Maintainability](https://api.codeclimate.com/v1/badges/52468dead5a8c7568a0f/maintainability)](https://codeclimate.com/github/mjacobus/mj/maintainability)
 
 ## Installation
 
@@ -22,7 +24,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```bash
+mj --help
+```
 
 ## Development
 

@@ -1,6 +1,24 @@
 # frozen_string_literal: true
 
 require "mj"
+require "simplecov"
+require "simplecov-lcov"
+
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
+  [
+    SimpleCov::Formatter::HTMLFormatter,
+    SimpleCov::Formatter::LcovFormatter
+  ]
+)
+
+SimpleCov::Formatter::LcovFormatter.config do |c|
+  c.report_with_single_file = true
+  c.single_report_path = "coverage/lcov.info"
+end
+
+if ENV["CI"] || ENV["COVERAGE"]
+  SimpleCov.start
+end
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -2,11 +2,11 @@ name: Ruby
 
 on:
   push:
-    branches:
+    branches: 
       - master
-
   pull_request:
-
+    branches:
+      - '*'
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -15,7 +15,6 @@ jobs:
       matrix:
         ruby:
           - '3.0.2'
-
     steps:
     - uses: actions/checkout@v2
     - name: Set up Ruby
@@ -25,3 +24,7 @@ jobs:
         bundler-cache: true
     - name: Run the default task
       run: bundle exec rake
+    - name: Coveralls
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}

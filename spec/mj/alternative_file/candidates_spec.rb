@@ -5,14 +5,8 @@ RSpec.describe Mj::AlternativeFile::Candidates do
 
   let(:files) do
     [
-      Mj::AlternativeFile::Candidate.new(
-        path: "spec/mj/alternative_file/candidates_spec.rb",
-        type: "spec"
-      ),
-      Mj::AlternativeFile::Candidate.new(
-        path: "foo_controller.rb",
-        type: "controller"
-      )
+      create_item("spec/mj/alternative_file/candidates_spec.rb", "spec"),
+      create_item("foo_controller.rb", "controller")
     ]
   end
 
@@ -31,11 +25,15 @@ RSpec.describe Mj::AlternativeFile::Candidates do
   end
 
   it "filters out files that are not#of_types" do
-    candidate = Mj::AlternativeFile::Candidate.new(path: "foo.rb", type: "foo")
+    candidate = create_item("foo.rb", "foo")
     candidates.add(candidate)
 
     result = candidates.of_types(%w[controller foo])
 
     expect(result.map(&:type)).to eq(%w[controller foo])
+  end
+
+  def create_item(path, type)
+    Mj::AlternativeFile::Candidate.new(path: path, type: type)
   end
 end

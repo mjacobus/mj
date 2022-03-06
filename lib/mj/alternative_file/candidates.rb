@@ -44,14 +44,8 @@ module Mj
       end
 
       def next_file(items, reference_file)
-        items = items.dup
-        items.push(items.first)
-        items.each_with_index do |item, index|
-          if item.path == reference_file.path
-            return items[index + 1]
-          end
-        end
-        items.first
+        index = items.find_index { |e| e.path == reference_file.path } || -1
+        items[index + 1] || items.first
       end
     end
   end

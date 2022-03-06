@@ -33,7 +33,77 @@ RSpec.describe Mj::AlternativeFile::Candidates do
     expect(result.map(&:type)).to eq(%w[controller foo])
   end
 
+  describe "#after" do
+    let(:files) do
+      [
+        create_item("one.rb", "regular"),
+        create_item("two.rb", "regular"),
+        create_item("three.rb", "regular"),
+        create_item("four.rb", "regular")
+      ]
+    end
+
+    it "returns the item after the reference file when reference exists" do
+      results = [
+        candidates.after(current("one.rb")),
+        candidates.after(current("two.rb")),
+        candidates.after(current("three.rb"))
+      ]
+
+      expect(results.map(&:path)).to eq(["two.rb", "three.rb", "four.rb"])
+    end
+
+    it "circles back to the first element when reference file is the last element" do
+      result = candidates.after(current("four.rb"))
+
+      expect(result.path).to eq("one.rb")
+    end
+
+    it "return the first item when reference file does not exist" do
+      result = candidates.after(current("none.rb"))
+
+      expect(result.path).to eq("one.rb")
+    end
+  end
+
+  describe "#before" do
+    let(:files) do
+      [
+        create_item("one.rb", "regular"),
+        create_item("two.rb", "regular"),
+        create_item("three.rb", "regular"),
+        create_item("four.rb", "regular")
+      ]
+    end
+
+    it "returns the item before the reference file when reference exists" do
+      results = [
+        candidates.before(current("two.rb")),
+        candidates.before(current("three.rb")),
+        candidates.before(current("four.rb"))
+      ]
+
+      expect(results.map(&:path)).to eq(["one.rb", "two.rb", "three.rb"])
+    end
+
+    it "circles back to the last element when reference file is the last element" do
+      result = candidates.before(current("one.rb"))
+
+      expect(result.path).to eq("four.rb")
+    end
+
+    it "return the last item when reference file does not exist" do
+      result = candidates.before(current("none.rb"))
+
+      expect(result.path).to eq("four.rb")
+    end
+  end
+
   def create_item(path, type)
     Mj::AlternativeFile::Candidate.new(path: path, type: type)
+  end
+
+  def current(path)
+    Mj::AlternativeFile::CurrentFile.new(path)
   end
 end

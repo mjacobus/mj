@@ -18,24 +18,21 @@ module Mj
       end
 
       def of_types(types)
-        self.class.new.tap do |selection|
-          each do |item|
-            if types.include?(item.type)
-              selection.add(item)
-            end
-          end
-        end
+        select { |item| types.include?(item.type) }
       end
 
       def unique
-        self.class.new.tap do |selection|
-          each_with_object([]) do |i, paths|
-            unless paths.include?(i.path)
-              selection.add(i)
-              paths.push(i.path)
-            end
-          end
-        end
+        new(@items.uniq(&:path))
+      end
+
+      def select(&block)
+        new(@items.select(&block))
+      end
+
+      private
+
+      def new(*args)
+        self.class.new(*args)
       end
     end
   end

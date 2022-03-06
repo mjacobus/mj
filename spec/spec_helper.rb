@@ -3,6 +3,7 @@
 require "mj"
 require "simplecov"
 require "simplecov-lcov"
+require "awesome_print"
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
   [

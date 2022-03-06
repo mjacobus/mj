@@ -5,6 +5,7 @@ source "https://rubygems.org"
 # Specify your gem's dependencies in mj.gemspec
 gemspec
 
+gem "awesome_print"
 gem "koine-test_runner"
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"

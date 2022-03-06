@@ -17,6 +17,16 @@ module Mj
         @items.push(candidate)
       end
 
+      def of_types(types)
+        self.class.new.tap do |selection|
+          each do |item|
+            if types.include?(item.type)
+              selection.add(item)
+            end
+          end
+        end
+      end
+
       def unique
         self.class.new.tap do |selection|
           each_with_object([]) do |i, paths|

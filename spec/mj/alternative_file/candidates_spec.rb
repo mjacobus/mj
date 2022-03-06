@@ -29,4 +29,13 @@ RSpec.describe Mj::AlternativeFile::Candidates do
 
     expect(result.map(&:path)).to eq(files.map(&:path))
   end
+
+  it "filters out files that are not#of_types" do
+    candidate = Mj::AlternativeFile::Candidate.new(path: "foo.rb", type: "foo")
+    candidates.add(candidate)
+
+    result = candidates.of_types(%w[controller foo])
+
+    expect(result.map(&:type)).to eq(%w[controller foo])
+  end
 end

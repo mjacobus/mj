@@ -32,3 +32,7 @@ RSpec.configure do |config|
     c.syntax = :expect
   end
 end
+
+def create_candidate(path, type)
+  Mj::AlternativeFile::Candidate.new(path: path, type: type)
+end

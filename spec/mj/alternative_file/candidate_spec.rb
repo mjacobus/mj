@@ -30,4 +30,17 @@ RSpec.describe Mj::AlternativeFile::Candidate do
       expect(candidate).not_to exist
     end
   end
+
+  it "implements ==" do
+    equal_object = create_candidate("path.rb", "rspec")
+    different_object = create_candidate("foo.rb", "bar")
+
+    expect(candidate == equal_object).to be(true)
+    expect(candidate == different_object).to be(false)
+    expect([candidate]).to include(equal_object)
+    expect([candidate]).not_to include(create_candidate("path.rb", "not_rspec"))
+    expect([candidate]).not_to include(create_candidate("not_path.rb", "rspec"))
+    expect(candidate).not_to eq(create_candidate("path.rb", "not_rspec"))
+    expect(candidate).not_to eq(create_candidate("not_path.rb", "rspec"))
+  end
 end

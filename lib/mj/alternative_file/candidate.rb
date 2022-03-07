@@ -14,6 +14,14 @@ module Mj
       def exist?
         File.exist?(path)
       end
+
+      def ==(other)
+        unless other.is_a?(self.class)
+          return false
+        end
+
+        other.path == path && other.type == type
+      end
     end
   end
 end

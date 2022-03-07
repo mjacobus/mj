@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require "mj"
 require "simplecov"
 require "simplecov-lcov"
 require "awesome_print"
@@ -18,8 +17,12 @@ SimpleCov::Formatter::LcovFormatter.config do |c|
 end
 
 if ENV["CI"] || ENV["COVERAGE"]
-  SimpleCov.start
+  SimpleCov.start do
+    add_filter "/spec"
+  end
 end
+
+require "mj"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

@@ -24,6 +24,12 @@ RSpec.describe Mj::AlternativeFile::Candidates do
     expect(result.map(&:path)).to eq(files.map(&:path))
   end
 
+  it "responds to #existing" do
+    result = candidates.existing
+
+    expect(result.map(&:type)).to eq(["spec"])
+  end
+
   it "filters out files that are not#of_types" do
     candidate = create_item("foo.rb", "foo")
     candidates.add(candidate)

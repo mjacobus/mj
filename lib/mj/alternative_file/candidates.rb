@@ -21,6 +21,10 @@ module Mj
         select { |item| types.include?(item.type) }
       end
 
+      def existing
+        select(&:exist?)
+      end
+
       def unique
         new(@items.uniq(&:path))
       end
@@ -44,7 +48,7 @@ module Mj
       end
 
       def next_file(items, reference_file)
-        index = items.find_index { |e| e.path == reference_file.path } || -1
+        index = items.find_index { |e| e.path.to_s == reference_file.path.to_s } || -1
         items[index + 1] || items.first
       end
     end

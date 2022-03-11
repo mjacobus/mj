@@ -6,7 +6,7 @@ require_relative "candidates"
 require_relative "current_file"
 require_relative "resolver"
 require_relative "resolvers/base"
-require_relative "resolvers/ruby/rails_model_resolver"
+require_relative "resolvers/ruby/rails_resolver"
 require_relative "resolvers/ruby/ruby_file"
 
 module Mj

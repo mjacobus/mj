@@ -26,7 +26,7 @@ module Mj
       def next(reference_file)
         file = CurrentFile.new(reference_file)
         candidate = resolve(file).after(file)
-        print_candidates([candidate])
+        print_candidates([candidate].compact)
       end
 
       desc "prev <reference-file>", "Previous alternative file"
@@ -35,7 +35,7 @@ module Mj
       def prev(reference_file)
         file = CurrentFile.new(reference_file)
         candidate = resolve(file).before(file)
-        print_candidates([candidate])
+        print_candidates([candidate].compact)
       end
 
       def self.resolvers
@@ -47,7 +47,7 @@ module Mj
       private
 
       def print_candidates(candidates)
-        $stdout.puts candidates.compact.map(&:path).join(" ")
+        $stdout.puts candidates.map(&:path).join(" ")
       end
 
       def resolve(file)

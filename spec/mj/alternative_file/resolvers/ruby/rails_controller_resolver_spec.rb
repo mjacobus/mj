@@ -15,6 +15,10 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     expect(resolver).to be_a(Mj::AlternativeFile::Resolvers::Base)
   end
 
+  it "does not resolve any ruby file" do
+    expect(resolve("foo.rb")).to be_empty
+  end
+
   it "resolves controller integration test" do
     result = resolve(controller)
 

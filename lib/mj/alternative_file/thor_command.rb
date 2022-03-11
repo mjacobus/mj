@@ -22,18 +22,20 @@ module Mj
 
       desc "next <reference-file>", "Next alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
+      option :exists, type: :boolean, banner: "files that exist", aliases: :e
       def next(reference_file)
         file = CurrentFile.new(reference_file)
-        candidates = resolve(file).after(file)
-        print_candidates([candidates])
+        candidate = resolve(file).after(file)
+        print_candidates([candidate])
       end
 
       desc "prev <reference-file>", "Previous alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
+      option :exists, type: :boolean, banner: "files that exist", aliases: :e
       def prev(reference_file)
         file = CurrentFile.new(reference_file)
-        candidates = resolve(file).before(file)
-        print_candidates([candidates])
+        candidate = resolve(file).before(file)
+        print_candidates([candidate])
       end
 
       def self.resolvers
@@ -45,7 +47,7 @@ module Mj
       private
 
       def print_candidates(candidates)
-        $stdout.puts candidates.map(&:path).join(" ")
+        $stdout.puts candidates.compact.map(&:path).join(" ")
       end
 
       def resolve(file)

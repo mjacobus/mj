@@ -38,7 +38,7 @@ module Mj
 
       def self.resolvers
         @resolvers ||= AlternativeFile::Resolver.new.tap do |resolvers|
-          resolvers.add(Resolvers::Ruby::RailsModelResolver.new)
+          resolvers.add(Resolvers::Ruby::RailsResolver.new)
         end
       end
 

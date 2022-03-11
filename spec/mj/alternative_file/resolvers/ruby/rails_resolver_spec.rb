@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsModelResolver do
+RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
   subject(:resolver) { described_class.new }
 
   def resolve(file)

@@ -4,7 +4,7 @@ module Mj
   module AlternativeFile
     module Resolvers
       module Ruby
-        class RailsModelResolver < Resolvers::Base
+        class RailsResolver < Resolvers::Base
           private
 
           def apply_to?(file)

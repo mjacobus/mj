@@ -17,27 +17,17 @@ module Mj
 
           def create_alternatives(file, alternatives)
             if file.start_with?("app/controllers")
-              add_integration_test_for_controller(file, alternatives)
-              add_integration_spec_for_controller(file, alternatives)
+              add_integration_test(file, alternatives, "spec")
+              add_integration_test(file, alternatives, "test")
               return
             end
 
             resolve_controller(file, alternatives)
           end
 
-          def add_integration_test_for_controller(file, alternatives)
-            test_path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-
-            alternative = create_candidate("test/integration/#{test_path}_test.rb", "integration_test")
-
-            alternatives.push(alternative)
-          end
-
-          def add_integration_spec_for_controller(file, alternatives)
-            spec_path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-
-            alternative = create_candidate("spec/integration/#{spec_path}_spec.rb", "integration_spec")
-
+          def add_integration_test(file, alternatives, type)
+            path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
+            alternative = create_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}")
             alternatives.push(alternative)
           end
 

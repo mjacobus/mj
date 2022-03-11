@@ -1,4 +1,4 @@
-name: Integration Checks
+name: CLI tests
 
 on:
   push:
@@ -10,7 +10,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    name: Ruby ${{ matrix.ruby }}
+    name: CLI tests
     strategy:
       matrix:
         ruby:

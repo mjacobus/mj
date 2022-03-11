@@ -42,7 +42,7 @@ module Mj
       def self.resolvers
         @resolvers ||= AlternativeFile::Resolver.new.tap do |resolvers|
           resolvers.add(Resolvers::Ruby::RailsResolver.new)
-          resolvers.add(Resolvers::Ruby::RailsControlerResolver.new)
+          resolvers.add(Resolvers::Ruby::RailsControllerResolver.new)
         end
       end
 

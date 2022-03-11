@@ -7,6 +7,7 @@ require_relative "current_file"
 require_relative "resolver"
 require_relative "resolvers/base"
 require_relative "resolvers/ruby/rails_resolver"
+require_relative "resolvers/ruby/rails_controller_resolver"
 require_relative "resolvers/ruby/ruby_file"
 
 module Mj
@@ -41,6 +42,7 @@ module Mj
       def self.resolvers
         @resolvers ||= AlternativeFile::Resolver.new.tap do |resolvers|
           resolvers.add(Resolvers::Ruby::RailsResolver.new)
+          resolvers.add(Resolvers::Ruby::RailsControlerResolver.new)
         end
       end
 

@@ -1,0 +1,34 @@
+name: CLI tests
+
+on:
+  push:
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - '*'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: CLI tests
+    strategy:
+      matrix:
+        ruby:
+          - '3.0.2'
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: ${{ matrix.ruby }}
+        bundler-cache: true
+    - run: bundle install
+    - run: bundle exec rake install
+    - run: gem install koine-test_runner # test
+    - run: which run_test
+    - run: bundle exec mj alternative_file list spec/mj/alternative_file/candidates_spec.rb
+    - run: bundle exec mj alternative_file next spec/mj/alternative_file/candidates_spec.rb
+    - run: bundle exec mj alternative_file prev spec/mj/alternative_file/candidates_spec.rb
+    - run: bundle exec mj alternative_file list lib/mj/alternative_file/candidate.rb --types=rspec --exists
+    - run: bundle exec mj alternative_file next lib/mj/alternative_file/candidate.rb --types=rspec --exists
+    - run: bundle exec mj alternative_file prev lib/mj/alternative_file/candidate.rb --types=rspec --exists

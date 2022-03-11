@@ -22,23 +22,25 @@ module Mj
 
       desc "next <reference-file>", "Next alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
+      option :exists, type: :boolean, banner: "files that exist", aliases: :e
       def next(reference_file)
         file = CurrentFile.new(reference_file)
-        candidates = resolve(file).after(file)
-        print_candidates([candidates])
+        candidate = resolve(file).after(file)
+        print_candidates([candidate].compact)
       end
 
       desc "prev <reference-file>", "Previous alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
+      option :exists, type: :boolean, banner: "files that exist", aliases: :e
       def prev(reference_file)
         file = CurrentFile.new(reference_file)
-        candidates = resolve(file).before(file)
-        print_candidates([candidates])
+        candidate = resolve(file).before(file)
+        print_candidates([candidate].compact)
       end
 
       def self.resolvers
         @resolvers ||= AlternativeFile::Resolver.new.tap do |resolvers|
-          resolvers.add(Resolvers::Ruby::RailsModelResolver.new)
+          resolvers.add(Resolvers::Ruby::RailsResolver.new)
         end
       end
 

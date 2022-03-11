@@ -37,8 +37,8 @@ module Mj
         to_s.split(char)
       end
 
-      def start_with?(prefix)
-        to_s.start_with?(prefix)
+      def start_with?(*args)
+        to_s.start_with?(*args)
       end
 
       def without_prefix(prefix)

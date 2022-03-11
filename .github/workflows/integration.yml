@@ -29,6 +29,6 @@ jobs:
     - run: bundle exec mj alternative_file list spec/mj/alternative_file/candidates_spec.rb
     - run: bundle exec mj alternative_file next spec/mj/alternative_file/candidates_spec.rb
     - run: bundle exec mj alternative_file prev spec/mj/alternative_file/candidates_spec.rb
-    - run: bundle exec mj alternative_file list lib/mj/alternative_file/candidate.rb --only=rspec --exist
-    - run: bundle exec mj alternative_file next lib/mj/alternative_file/candidate.rb --only=rspec --exist
-    - run: bundle exec mj alternative_file prev lib/mj/alternative_file/candidate.rb --only=rspec --exist
+    - run: bundle exec mj alternative_file list lib/mj/alternative_file/candidate.rb --type=rspec --exist
+    - run: bundle exec mj alternative_file next lib/mj/alternative_file/candidate.rb --type=rspec --exist
+    - run: bundle exec mj alternative_file prev lib/mj/alternative_file/candidate.rb --type=rspec --exist

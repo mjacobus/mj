@@ -33,6 +33,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     expect(result).to include(create_candidate(controller_spec, "controller_spec"))
   end
 
+  it "resolves controller from test" do
+    result = resolve(controller_test)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
+
+  it "resolves controller from spec" do
+    result = resolve(controller_spec)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
+
   it "resolves controller integration test" do
     result = resolve(controller)
 

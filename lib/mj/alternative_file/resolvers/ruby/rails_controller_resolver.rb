@@ -17,6 +17,8 @@ module Mj
 
           def create_alternatives(file, alternatives)
             if file.start_with?("app/controllers")
+              add_controller_test(file, alternatives, "spec")
+              add_controller_test(file, alternatives, "test")
               add_integration_test(file, alternatives, "spec")
               add_integration_test(file, alternatives, "test")
               return
@@ -28,6 +30,12 @@ module Mj
           def add_integration_test(file, alternatives, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
             alternative = create_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}")
+            alternatives.push(alternative)
+          end
+
+          def add_controller_test(file, alternatives, type)
+            path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
+            alternative = create_candidate("#{type}/controllers/#{path}_#{type}.rb", "controller_#{type}")
             alternatives.push(alternative)
           end
 

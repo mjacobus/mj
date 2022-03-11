@@ -7,6 +7,8 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     described_class.new.resolve(Mj::AlternativeFile::CurrentFile.new(file))
   end
 
+  let(:controller_spec) { "spec/controllers/foos/bars_controller_spec.rb" }
+  let(:controller_test) { "test/controllers/foos/bars_controller_test.rb" }
   let(:integration_spec) { "spec/integration/foos/bars_controller_spec.rb" }
   let(:integration_test) { "test/integration/foos/bars_controller_test.rb" }
   let(:controller) { "app/controllers/foos/bars_controller.rb" }
@@ -17,6 +19,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
 
   it "does not resolve any ruby file" do
     expect(resolve("foo.rb")).to be_empty
+  end
+
+  it "resolves controller test" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(controller_test, "controller_test"))
+  end
+
+  it "resolves controller spec" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(controller_spec, "controller_spec"))
   end
 
   it "resolves controller integration test" do

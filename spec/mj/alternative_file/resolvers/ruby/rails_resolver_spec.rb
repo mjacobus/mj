@@ -20,7 +20,7 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
   it "resolves rspec file" do
     result = resolve("app/models/users/profile.rb")
 
-    expect(result).to include(create_candidate("spec/models/users/profile_spec.rb", "rspec"))
+    expect(result).to include(create_candidate("spec/models/users/profile_spec.rb", "spec"))
   end
 
   it "resolves minitest file" do

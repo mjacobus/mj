@@ -4,7 +4,7 @@ RSpec.describe Mj::AlternativeFile::Candidate do
   subject(:candidate) do
     described_class.new(
       path: "path.rb",
-      type: "rspec"
+      type: "spec"
     )
   end
 
@@ -13,14 +13,14 @@ RSpec.describe Mj::AlternativeFile::Candidate do
   end
 
   it "has a type" do
-    expect(candidate.type).to eq("rspec")
+    expect(candidate.type).to eq("spec")
   end
 
   describe "#exist?" do
     it "returns true if the file exists" do
       candidate = described_class.new(
         path: "spec/mj/alternative_file/candidate_spec.rb",
-        type: "rspec"
+        type: "spec"
       )
 
       expect(candidate).to exist
@@ -32,15 +32,15 @@ RSpec.describe Mj::AlternativeFile::Candidate do
   end
 
   it "implements ==" do
-    equal_object = create_candidate("path.rb", "rspec")
+    equal_object = create_candidate("path.rb", "spec")
     different_object = create_candidate("foo.rb", "bar")
 
     expect(candidate == equal_object).to be(true)
     expect(candidate == different_object).to be(false)
     expect([candidate]).to include(equal_object)
-    expect([candidate]).not_to include(create_candidate("path.rb", "not_rspec"))
-    expect([candidate]).not_to include(create_candidate("not_path.rb", "rspec"))
-    expect(candidate).not_to eq(create_candidate("path.rb", "not_rspec"))
-    expect(candidate).not_to eq(create_candidate("not_path.rb", "rspec"))
+    expect([candidate]).not_to include(create_candidate("path.rb", "not_spec"))
+    expect([candidate]).not_to include(create_candidate("not_path.rb", "spec"))
+    expect(candidate).not_to eq(create_candidate("path.rb", "not_spec"))
+    expect(candidate).not_to eq(create_candidate("not_path.rb", "spec"))
   end
 end

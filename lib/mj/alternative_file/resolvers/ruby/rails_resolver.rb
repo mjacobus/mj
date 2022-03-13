@@ -14,7 +14,7 @@ module Mj
           def create_alternatives(file, alternatives)
             ruby_file = Ruby::RubyFile.new(file)
             alternatives.push(create_candidate("app/#{ruby_file.class_path}.rb", "model"))
-            alternatives.push(create_candidate("spec/#{ruby_file.class_path}_spec.rb", "rspec"))
+            alternatives.push(create_candidate("spec/#{ruby_file.class_path}_spec.rb", "spec"))
             alternatives.push(create_candidate("test/#{ruby_file.class_path}_test.rb", "minitest"))
           end
         end

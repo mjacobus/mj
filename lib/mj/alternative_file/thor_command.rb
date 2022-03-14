@@ -62,7 +62,7 @@ module Mj
       private
 
       def print_candidates(candidates)
-        $stdout.puts candidates.map { |i| i.to_s(debug: options[:debug]) }.join(" ")
+        $stdout.puts candidates.map { |i| i.to_s(debug: options[:debug]) }.join("\n")
       end
     end
   end

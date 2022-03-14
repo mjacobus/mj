@@ -8,11 +8,16 @@ module Mj
           private
 
           def apply_to?(file)
-            file.end_with?("component.rb", "component.html.erb")
+            file.end_with?(
+              "component.rb",
+              "component.html.erb",
+              "component_test.rb",
+              "component_spec.rb"
+            )
           end
 
           def add_candidates(file, candidates)
-            if file.end_with?("component.rb")
+            if file.extension == "rb"
               return resolve_template(file, candidates)
             end
 
@@ -20,8 +25,9 @@ module Mj
           end
 
           def resolve_template(file, candidates)
-            file_name = file.sub(/_component.rb$/, "_component.html.erb")
-            add_candidate(file_name, "component_template", to: candidates)
+            file = file.sub(/_component(_test|_spec)?.rb$/, "_component.html.erb")
+            file = file.sub(/^(spec|test)/, "app")
+            add_candidate(file, "component_template", to: candidates)
           end
 
           def resolve_component_class(file, candidates)

@@ -25,8 +25,75 @@ Or install it yourself as:
 ## Usage
 
 ```bash
-mj --help
+mj help
 ```
+
+### Alternative file
+
+Examples:
+
+```
+$ mj alternative_file list app/components/attribute_component.rb
+app/components/attribute_component.html.erb
+app/components/attribute_component.rb
+lib/components/attribute_component.rb
+spec/components/attribute_component_spec.rb
+test/components/attribute_component_test.rb
+
+$ mj alternative_file list app/components/attribute_component.rb  --exists
+app/components/attribute_component.html.erb
+app/components/attribute_component.rb
+spec/components/attribute_component_spec.rb
+
+$ mj alternative_file list app/components/attribute_component.rb  --types=spec
+spec/components/attribute_component_spec.rb
+
+$ mj alternative_file next app/components/attribute_component.rb
+lib/components/attribute_component.rb
+
+$ mj alternative_file prev app/components/attribute_component.rb
+app/components/attribute_component.html.erb
+```
+
+Why? Because you can integrate that command with your IDE/Text Editor. For instance, here's my [neovim integration](https://github.com/mjacobus/dotfiles/blob/d8ceda659dc9b587ab22b05fc15eac2fa5b477d7/neovim/.config/nvim/init.lua#L31-L63):
+
+```lua
+vimp.nnoremap('<leader>ak', function()
+  open_mj_alternative_file('next', '--exists')
+end)
+
+vimp.nnoremap('<leader>aj', function()
+  open_mj_alternative_file('prev', '--exists')
+end)
+
+function open_mj_alternative_file(subcommand, options)
+  file_path = vim.fn.expand('%')
+  files = mj_alternative_file(file_path, subcommand, options)
+  files = vim.split(files, ' ')
+  file = files[1]
+
+
+  if file ~= '' then
+    vim.api.nvim_command('e ' .. file)
+  end
+end
+
+function mj_alternative_file(file, subcommand, options)
+  local cmd = 'mj alternative_file ' .. subcommand .. ' ' .. file .. ' ' .. options
+  return execute_command(cmd)
+end
+
+function execute_command(cmd)
+  print("cmd: " .. cmd)
+  local f = io.popen(cmd)
+  local s = f:read('*a')
+  f:close()
+  return s
+end
+```
+
+This way I can use `<leader>a{direction}`, where `k` is `next`, and `j` is `previous` alternative file.
+
 
 ## Development
 

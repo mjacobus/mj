@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::ViewComponentsResolver do
+RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::ViewComponentResolver do
   subject(:resolver) { described_class.new }
 
   let(:component_class) { "app/components/foos/bar_component.rb" }

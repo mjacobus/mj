@@ -4,7 +4,7 @@ module Mj
   module AlternativeFile
     module Resolvers
       module Ruby
-        class ViewComponentsResolver < Resolvers::Base
+        class ViewComponentResolver < Resolvers::Base
           private
 
           def apply_to?(file)

@@ -8,7 +8,7 @@ require_relative "resolver"
 require_relative "resolvers/base"
 require_relative "resolvers/ruby/rails_resolver"
 require_relative "resolvers/ruby/rails_controller_resolver"
-require_relative "resolvers/ruby/view_components_resolver"
+require_relative "resolvers/ruby/view_component_resolver"
 require_relative "resolvers/ruby/ruby_file"
 
 module Mj

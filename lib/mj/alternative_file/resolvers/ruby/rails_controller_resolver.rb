@@ -17,7 +17,7 @@ module Mj
             )
           end
 
-          def create_alternatives(file, alternatives)
+          def add_candidates(file, alternatives)
             if file.start_with?("app/controllers")
               add_controller_test(file, alternatives, "spec")
               add_controller_test(file, alternatives, "test")

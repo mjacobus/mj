@@ -7,7 +7,7 @@ module Mj
         def resolve(file)
           [].tap do |alternatives|
             if apply_to?(file)
-              create_alternatives(file, alternatives)
+              add_candidates(file, alternatives)
             end
           end
         end

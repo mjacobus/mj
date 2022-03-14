@@ -21,12 +21,12 @@ module Mj
 
           def resolve_template(file, candidates)
             file_name = file.sub(/_component.rb$/, "_component.html.erb")
-            candidates.push(create_candidate(file_name, "component_template"))
+            add_candidate(file_name, "component_template", to: candidates)
           end
 
           def resolve_component_class(file, candidates)
             file_name = file.sub(/_component.html.erb$/, "_component.rb")
-            candidates.push(create_candidate(file_name, "component_class"))
+            add_candidate(file_name, "component_class", to: candidates)
           end
         end
       end

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "thor"
+require_relative "version"
 require_relative "alternative_file/thor_command"
 
 module Mj
@@ -9,7 +10,12 @@ module Mj
       true
     end
 
-    desc "alternative_file", "lists alternative files"
+    desc "version", "Prints the version"
+    def version
+      puts Mj::VERSION
+    end
+
+    desc "alternative_file", "Lists alternative files"
     subcommand "alternative_file", AlternativeFile::ThorCommand
   end
 end

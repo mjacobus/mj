@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mj (0.4.0)
+    mj (0.4.1)
       thor (~> 1.2.1)
 
 GEM

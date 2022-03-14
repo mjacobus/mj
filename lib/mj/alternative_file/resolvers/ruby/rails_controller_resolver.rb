@@ -17,31 +17,31 @@ module Mj
             )
           end
 
-          def add_candidates(file, alternatives)
+          def add_candidates(file, candidates)
             if file.start_with?("app/controllers")
-              add_controller_test(file, alternatives, "spec")
-              add_controller_test(file, alternatives, "test")
-              add_integration_test(file, alternatives, "spec")
-              add_integration_test(file, alternatives, "test")
+              add_controller_test(file, candidates, "spec")
+              add_controller_test(file, candidates, "test")
+              add_integration_test(file, candidates, "spec")
+              add_integration_test(file, candidates, "test")
               return
             end
 
-            resolve_controller(file, alternatives)
+            resolve_controller(file, candidates)
           end
 
-          def add_integration_test(file, alternatives, type)
+          def add_integration_test(file, candidates, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-            alternative = create_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}")
-            alternatives.push(alternative)
+            candidate = create_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}")
+            candidates.push(candidate)
           end
 
-          def add_controller_test(file, alternatives, type)
+          def add_controller_test(file, candidates, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-            alternative = create_candidate("#{type}/controllers/#{path}_#{type}.rb", "controller_#{type}")
-            alternatives.push(alternative)
+            candidate = create_candidate("#{type}/controllers/#{path}_#{type}.rb", "controller_#{type}")
+            candidates.push(candidate)
           end
 
-          def resolve_controller(file, alternatives)
+          def resolve_controller(file, candidates)
             controller_path = file.sub("test/integration", "app/controllers")
               .sub("spec/integration", "app/controllers")
               .sub("spec/controllers", "app/controllers")
@@ -50,7 +50,7 @@ module Mj
               .sub("_test.rb", ".rb")
               .to_s
 
-            alternatives.push(create_candidate(controller_path, "controller"))
+            candidates.push(create_candidate(controller_path, "controller"))
           end
         end
       end

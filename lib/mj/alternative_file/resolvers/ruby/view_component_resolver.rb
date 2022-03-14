@@ -11,22 +11,22 @@ module Mj
             file.end_with?("component.rb", "component.html.erb")
           end
 
-          def add_candidates(file, alternatives)
+          def add_candidates(file, candidates)
             if file.end_with?("component.rb")
-              return resolve_template(file, alternatives)
+              return resolve_template(file, candidates)
             end
 
-            resolve_component_class(file, alternatives)
+            resolve_component_class(file, candidates)
           end
 
-          def resolve_template(file, alternatives)
+          def resolve_template(file, candidates)
             file_name = file.sub(/_component.rb$/, "_component.html.erb")
-            alternatives.push(create_candidate(file_name, "component_template"))
+            candidates.push(create_candidate(file_name, "component_template"))
           end
 
-          def resolve_component_class(file, alternatives)
+          def resolve_component_class(file, candidates)
             file_name = file.sub(/_component.html.erb$/, "_component.rb")
-            alternatives.push(create_candidate(file_name, "component_class"))
+            candidates.push(create_candidate(file_name, "component_class"))
           end
         end
       end

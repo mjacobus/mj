@@ -15,9 +15,11 @@ module Mj
         private
 
         def create_candidate(path, type)
-          AlternativeFile::Candidate.new(path: path, type: type, metadata: {
-                                           resolved_by: self.class.name
-                                         })
+          AlternativeFile::Candidate.new(
+            path: path.to_s,
+            type: type.to_s,
+            metadata: { resolved_by: self.class.name }
+          )
         end
 
         def apply_to?(_file)

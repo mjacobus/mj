@@ -41,6 +41,10 @@ module Mj
         to_s.start_with?(*args)
       end
 
+      def end_with?(*args)
+        to_s.end_with?(*args)
+      end
+
       def without_prefix(prefix)
         sub(/^#{prefix}/, "")
       end

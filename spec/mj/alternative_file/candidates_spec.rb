@@ -105,6 +105,12 @@ RSpec.describe Mj::AlternativeFile::Candidates do
     end
   end
 
+  it "can be sorted by path with #sorted_by_path" do
+    sorted = candidates.sorted_by_path.map(&:path)
+
+    expect(sorted).to eq(files.map(&:path).sort)
+  end
+
   def create_item(path, type)
     Mj::AlternativeFile::Candidate.new(path: path, type: type)
   end

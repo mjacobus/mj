@@ -4,7 +4,11 @@ RSpec.describe Mj::AlternativeFile::Candidate do
   subject(:candidate) do
     described_class.new(
       path: "path.rb",
-      type: "spec"
+      type: "spec",
+      metadata: {
+        "foo" => "bar",
+        "baz" => "qux"
+      }
     )
   end
 
@@ -42,5 +46,15 @@ RSpec.describe Mj::AlternativeFile::Candidate do
     expect([candidate]).not_to include(create_candidate("not_path.rb", "spec"))
     expect(candidate).not_to eq(create_candidate("path.rb", "not_spec"))
     expect(candidate).not_to eq(create_candidate("not_path.rb", "spec"))
+  end
+
+  describe "#to_s" do
+    it "returns path when debug is off" do
+      expect(candidate.to_s).to eq("path.rb")
+    end
+
+    it "includes metadata when debug is true" do
+      expect(candidate.to_s(debug: true)).to eq("path.rb(type:spec,exists:false,baz:qux,foo:bar)")
+    end
   end
 end

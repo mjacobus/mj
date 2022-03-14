@@ -41,6 +41,10 @@ module Mj
         next_file(@items.reverse, reference_file)
       end
 
+      def sorted_by_path
+        new(@items.sort_by(&:path))
+      end
+
       private
 
       def new(*args)

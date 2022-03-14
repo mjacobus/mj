@@ -10,6 +10,8 @@ require_relative "resolvers/ruby/rails_resolver"
 require_relative "resolvers/ruby/rails_controller_resolver"
 require_relative "resolvers/ruby/view_component_resolver"
 require_relative "resolvers/ruby/ruby_file"
+require_relative "commands/list_command_handler"
+require_relative "commands/list_command"
 
 module Mj
   module AlternativeFile
@@ -19,8 +21,10 @@ module Mj
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
       option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def list(reference_file)
-        file = CurrentFile.new(reference_file)
-        print_candidates(resolve(file))
+        handler = Commands::ListCommandHandler.new(resolvers: self.class.resolvers)
+        command = Commands::ListCommand.new(reference_file, options)
+        candidates = handler.handle(command)
+        print_candidates(candidates)
       end
 
       desc "next <reference-file>", "Next alternative file"
@@ -28,8 +32,10 @@ module Mj
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
       option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def next(reference_file)
-        file = CurrentFile.new(reference_file)
-        candidate = resolve(file).after(file)
+        handler = Commands::ListCommandHandler.new(resolvers: self.class.resolvers)
+        command = Commands::ListCommand.new(reference_file, options)
+        candidates = handler.handle(command)
+        candidate = candidates.after(command.file)
         print_candidates([candidate].compact)
       end
 
@@ -38,8 +44,10 @@ module Mj
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
       option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def prev(reference_file)
-        file = CurrentFile.new(reference_file)
-        candidate = resolve(file).before(file)
+        handler = Commands::ListCommandHandler.new(resolvers: self.class.resolvers)
+        command = Commands::ListCommand.new(reference_file, options)
+        candidates = handler.handle(command)
+        candidate = candidates.before(command.file)
         print_candidates([candidate].compact)
       end
 
@@ -56,26 +64,6 @@ module Mj
       def print_candidates(candidates)
         $stdout.puts candidates.map { |i| i.to_s(debug: options[:debug]) }.join(" ")
       end
-
-      # rubocop:disable Metrics/MethodLength
-      def resolve(file)
-        candidates = self.class.resolvers.resolve(file)
-
-        if options[:types]
-          candidates = candidates.of_types(options[:types].to_s.split(","))
-        end
-
-        if options[:exists]
-          candidates = candidates.existing
-        end
-
-        unless options[:debug]
-          candidates = candidates.unique
-        end
-
-        candidates
-      end
-      # rubocop:enable Metrics/MethodLength
     end
   end
 end

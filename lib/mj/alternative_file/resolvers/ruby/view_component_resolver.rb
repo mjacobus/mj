@@ -11,7 +11,7 @@ module Mj
             file.end_with?("component.rb", "component.html.erb")
           end
 
-          def create_alternatives(file, alternatives)
+          def add_candidates(file, alternatives)
             if file.end_with?("component.rb")
               return resolve_template(file, alternatives)
             end

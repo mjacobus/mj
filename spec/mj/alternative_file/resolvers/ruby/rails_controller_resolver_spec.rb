@@ -3,10 +3,6 @@
 RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
   subject(:resolver) { described_class.new }
 
-  def resolve(file)
-    described_class.new.resolve(Mj::AlternativeFile::CurrentFile.new(file))
-  end
-
   let(:controller_spec) { "spec/controllers/foos/bars_controller_spec.rb" }
   let(:controller_test) { "test/controllers/foos/bars_controller_test.rb" }
   let(:integration_spec) { "spec/integration/foos/bars_controller_spec.rb" }

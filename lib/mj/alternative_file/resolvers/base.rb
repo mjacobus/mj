@@ -5,9 +5,9 @@ module Mj
     module Resolvers
       class Base
         def resolve(file)
-          [].tap do |alternatives|
+          [].tap do |candidates|
             if apply_to?(file)
-              add_candidates(file, alternatives)
+              add_candidates(file, candidates)
             end
           end
         end

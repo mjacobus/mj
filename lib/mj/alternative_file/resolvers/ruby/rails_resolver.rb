@@ -16,6 +16,9 @@ module Mj
             alternatives.push(create_candidate("app/#{ruby_file.class_path}.rb", "model"))
             alternatives.push(create_candidate("spec/#{ruby_file.class_path}_spec.rb", "spec"))
             alternatives.push(create_candidate("test/#{ruby_file.class_path}_test.rb", "minitest"))
+
+            # lib files
+            alternatives.push(create_candidate("lib/#{ruby_file.class_path}.rb", "lib"))
           end
         end
       end

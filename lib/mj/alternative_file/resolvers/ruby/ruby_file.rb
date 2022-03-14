@@ -8,6 +8,7 @@ module Mj
           def class_path
             path_without_extension
               .without_prefix("app")
+              .without_prefix("lib")
               .without_prefix("spec")
               .without_suffix("_spec")
               .without_suffix("_test")

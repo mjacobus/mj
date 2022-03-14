@@ -3,10 +3,6 @@
 RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
   subject(:resolver) { described_class.new }
 
-  def resolve(file)
-    described_class.new.resolve(Mj::AlternativeFile::CurrentFile.new(file))
-  end
-
   it "extends base class" do
     expect(resolver).to be_a(Mj::AlternativeFile::Resolvers::Base)
   end

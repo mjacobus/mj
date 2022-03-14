@@ -31,14 +31,12 @@ module Mj
 
           def add_integration_test(file, candidates, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-            candidate = create_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}")
-            candidates.push(candidate)
+            add_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}", to: candidates)
           end
 
           def add_controller_test(file, candidates, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
-            candidate = create_candidate("#{type}/controllers/#{path}_#{type}.rb", "controller_#{type}")
-            candidates.push(candidate)
+            add_candidate("#{type}/controllers/#{path}_#{type}.rb", "controller_#{type}", to: candidates)
           end
 
           def resolve_controller(file, candidates)
@@ -50,7 +48,7 @@ module Mj
               .sub("_test.rb", ".rb")
               .to_s
 
-            candidates.push(create_candidate(controller_path, "controller"))
+            add_candidate(controller_path, "controller", to: candidates)
           end
         end
       end

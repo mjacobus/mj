@@ -13,12 +13,12 @@ module Mj
 
           def add_candidates(file, candidates)
             ruby_file = Ruby::RubyFile.new(file)
-            candidates.push(create_candidate("app/#{ruby_file.class_path}.rb", "model"))
-            candidates.push(create_candidate("spec/#{ruby_file.class_path}_spec.rb", "spec"))
-            candidates.push(create_candidate("test/#{ruby_file.class_path}_test.rb", "minitest"))
+            add_candidate("app/#{ruby_file.class_path}.rb", :model, to: candidates)
+            add_candidate("spec/#{ruby_file.class_path}_spec.rb", :spec, to: candidates)
+            add_candidate("test/#{ruby_file.class_path}_test.rb", :minitest, to: candidates)
 
             # lib files
-            candidates.push(create_candidate("lib/#{ruby_file.class_path}.rb", "lib"))
+            add_candidate("lib/#{ruby_file.class_path}.rb", "lib", to: candidates)
           end
         end
       end

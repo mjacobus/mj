@@ -16,6 +16,7 @@ module Mj
       desc "list <reference-file>", "List all alternative files"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
+      option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def list(reference_file)
         file = CurrentFile.new(reference_file)
         print_candidates(resolve(file))
@@ -24,6 +25,7 @@ module Mj
       desc "next <reference-file>", "Next alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
+      option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def next(reference_file)
         file = CurrentFile.new(reference_file)
         candidate = resolve(file).after(file)
@@ -33,6 +35,7 @@ module Mj
       desc "prev <reference-file>", "Previous alternative file"
       option :types, type: :string, banner: "<comma-separated-types>", aliases: :t
       option :exists, type: :boolean, banner: "files that exist", aliases: :e
+      option :debug, type: :boolean, banner: "print debug information", aliases: :d
       def prev(reference_file)
         file = CurrentFile.new(reference_file)
         candidate = resolve(file).before(file)
@@ -49,9 +52,10 @@ module Mj
       private
 
       def print_candidates(candidates)
-        $stdout.puts candidates.map(&:path).join(" ")
+        $stdout.puts candidates.map { |i| i.to_s(debug: options[:debug]) }.join(" ")
       end
 
+      # rubocop:disable Metrics/MethodLength
       def resolve(file)
         candidates = self.class.resolvers.resolve(file)
 
@@ -63,8 +67,13 @@ module Mj
           candidates = candidates.existing
         end
 
-        candidates.unique
+        unless options[:debug]
+          candidates = candidates.unique
+        end
+
+        candidates
       end
+      # rubocop:enable Metrics/MethodLength
     end
   end
 end

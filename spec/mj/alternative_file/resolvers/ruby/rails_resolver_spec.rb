@@ -54,22 +54,34 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
       expect(result).to include(create_candidate("lib/services/users/profile.rb", "lib"))
     end
 
+    it "resolves from spec file when file include lib folder" do
+      result = resolve("spec/lib/services/users/profile_spec.rb")
+
+      expect(result).to include(create_candidate("lib/services/users/profile.rb", "lib"))
+    end
+
+    it "resolves from test file when file include lib folder" do
+      result = resolve("test/lib/services/users/profile_test.rb")
+
+      expect(result).to include(create_candidate("lib/services/users/profile.rb", "lib"))
+    end
+
     it "resolves rspec file" do
       result = resolve("lib/services/users/profile.rb")
 
       expect(result).to include(create_candidate("spec/services/users/profile_spec.rb", "spec"))
     end
 
-    it "resolves rspec file with lib prefix" do
-      result = resolve("lib/services/users/profile.rb")
-
-      expect(result).to include(create_candidate("spec/lib/services/users/profile_spec.rb", "spec"))
-    end
-
     it "resolves minitest file" do
       result = resolve("lib/services/users/profile.rb")
 
       expect(result).to include(create_candidate("test/services/users/profile_test.rb", "minitest"))
+    end
+
+    it "resolves rspec file with lib prefix" do
+      result = resolve("lib/services/users/profile.rb")
+
+      expect(result).to include(create_candidate("spec/lib/services/users/profile_spec.rb", "spec"))
     end
 
     it "resolves minitest file with lib prefix" do

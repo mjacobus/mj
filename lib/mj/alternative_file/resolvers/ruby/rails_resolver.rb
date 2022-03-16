@@ -19,6 +19,8 @@ module Mj
 
             # lib files
             add_candidate("lib/#{ruby_file.class_path}.rb", "lib", to: candidates)
+            add_candidate("spec/lib/#{ruby_file.class_path}_spec.rb", :spec, to: candidates)
+            add_candidate("test/lib/#{ruby_file.class_path}_test.rb", :minitest, to: candidates)
           end
         end
       end

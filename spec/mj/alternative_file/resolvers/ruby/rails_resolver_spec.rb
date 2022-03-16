@@ -60,10 +60,22 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
       expect(result).to include(create_candidate("spec/services/users/profile_spec.rb", "spec"))
     end
 
+    it "resolves rspec file with lib prefix" do
+      result = resolve("lib/services/users/profile.rb")
+
+      expect(result).to include(create_candidate("spec/lib/services/users/profile_spec.rb", "spec"))
+    end
+
     it "resolves minitest file" do
       result = resolve("lib/services/users/profile.rb")
 
       expect(result).to include(create_candidate("test/services/users/profile_test.rb", "minitest"))
+    end
+
+    it "resolves minitest file with lib prefix" do
+      result = resolve("lib/services/users/profile.rb")
+
+      expect(result).to include(create_candidate("test/lib/services/users/profile_test.rb", "minitest"))
     end
   end
 end

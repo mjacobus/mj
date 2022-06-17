@@ -7,6 +7,8 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
   let(:controller_spec) { "spec/controllers/foos/bars_controller_spec.rb" }
   let(:request_spec) { "spec/requests/foos/bars_spec.rb" }
   let(:request_test) { "test/requests/foos/bars_test.rb" }
+  let(:system_spec) { "spec/system/foos/bars_spec.rb" }
+  let(:system_test) { "test/system/foos/bars_test.rb" }
   let(:controller_test) { "test/controllers/foos/bars_controller_test.rb" }
   let(:integration_spec) { "spec/integration/foos/bars_controller_spec.rb" }
   let(:integration_test) { "test/integration/foos/bars_controller_test.rb" }
@@ -50,6 +52,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     expect(result).to include(create_candidate(request_test, "request_test"))
   end
 
+  it "resolves controller system spec" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(system_spec, "system_spec"))
+  end
+
+  it "resolves controller system test" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(system_test, "system_test"))
+  end
+
   it "resolves controller from spec" do
     result = resolve(controller_spec)
 
@@ -88,6 +102,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
 
   it "resolves controller from request test" do
     result = resolve(request_test)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
+
+  it "resolves controller from system spec" do
+    result = resolve(system_spec)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
+
+  it "resolves controller from system test" do
+    result = resolve(system_test)
 
     expect(result).to include(create_candidate(controller, "controller"))
   end

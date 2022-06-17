@@ -1,9 +1,12 @@
 # frozen_string_literal: true
 
+# rubocop:disable RSpec/MultipleMemoizedHelpers:
 RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
   subject(:resolver) { described_class.new }
 
   let(:controller_spec) { "spec/controllers/foos/bars_controller_spec.rb" }
+  let(:request_spec) { "spec/requests/foos/bars_spec.rb" }
+  let(:request_test) { "test/requests/foos/bars_test.rb" }
   let(:controller_test) { "test/controllers/foos/bars_controller_test.rb" }
   let(:integration_spec) { "spec/integration/foos/bars_controller_spec.rb" }
   let(:integration_test) { "test/integration/foos/bars_controller_test.rb" }
@@ -35,6 +38,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     expect(result).to include(create_candidate(controller, "controller"))
   end
 
+  it "resolves controller request spec" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(request_spec, "request_spec"))
+  end
+
+  it "resolves controller request test" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(request_test, "request_test"))
+  end
+
   it "resolves controller from spec" do
     result = resolve(controller_spec)
 
@@ -64,4 +79,17 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
 
     expect(result).to include(create_candidate(controller, "controller"))
   end
+
+  it "resolves controller from request spec" do
+    result = resolve(request_spec)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
+
+  it "resolves controller from request test" do
+    result = resolve(request_test)
+
+    expect(result).to include(create_candidate(controller, "controller"))
+  end
 end
+# rubocop:enable RSpec/MultipleMemoizedHelpers:

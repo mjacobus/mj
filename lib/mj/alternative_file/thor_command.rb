@@ -9,6 +9,7 @@ require_relative "resolvers/base"
 require_relative "resolvers/ruby/rails_resolver"
 require_relative "resolvers/ruby/rails_controller_resolver"
 require_relative "resolvers/ruby/view_component_resolver"
+require_relative "resolvers/ruby/packwerk_resolver"
 require_relative "resolvers/ruby/ruby_file"
 require_relative "commands/list_command_handler"
 require_relative "commands/list_command"
@@ -56,6 +57,7 @@ module Mj
           resolvers.add(Resolvers::Ruby::RailsResolver.new)
           resolvers.add(Resolvers::Ruby::RailsControllerResolver.new)
           resolvers.add(Resolvers::Ruby::ViewComponentResolver.new)
+          resolvers.add(Resolvers::Ruby::PackwerkResolver.new)
         end
       end
 

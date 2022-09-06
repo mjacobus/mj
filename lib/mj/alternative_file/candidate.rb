@@ -24,6 +24,10 @@ module Mj
         other.path == path && other.type == type
       end
 
+      def inspect
+        "#{path}|#{type}"
+      end
+
       def to_s(debug: false)
         parts = [path]
 

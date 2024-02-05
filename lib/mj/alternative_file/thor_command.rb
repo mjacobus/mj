@@ -59,6 +59,7 @@ module Mj
           resolvers.add(Resolvers::Ruby::RailsControllerResolver.new)
           resolvers.add(Resolvers::Ruby::ViewComponentResolver.new)
           resolvers.add(Resolvers::Ruby::PackwerkResolver.new)
+          resolvers.add(Resolvers::Ruby::VendoredGemsResolver.new)
         end
       end
 

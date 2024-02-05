@@ -7,6 +7,7 @@ gemspec
 
 gem "awesome_print"
 gem "koine-test_runner"
+gem "pry", require: true
 gem "rake", "~> 13.0"
 gem "rspec", "~> 3.0"
 gem "rubocop", "~> 1.21"

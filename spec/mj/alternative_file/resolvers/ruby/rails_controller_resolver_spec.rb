@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:disable RSpec/MultipleMemoizedHelpers:
 RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
   subject(:resolver) { described_class.new }
 
@@ -118,4 +117,3 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     expect(result).to include(create_candidate(controller, "controller"))
   end
 end
-# rubocop:enable RSpec/MultipleMemoizedHelpers:

@@ -27,7 +27,7 @@ Layout/FirstArrayElementIndentation:
 
 Layout/LineLength:
   Max: 120
-   
+
 Layout/MultilineMethodCallIndentation:
   EnforcedStyle: indented
 
@@ -87,10 +87,12 @@ RSpec/ExpectChange:
 RSpec/MultipleExpectations:
   Enabled: false
 
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
 RSpec/NestedGroups:
   Max: 4
 
 # while that is a good rule, AR objects can't be properly instance_double'd
 RSpec/VerifiedDoubles:
   Enabled: false
-

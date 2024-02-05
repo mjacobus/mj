@@ -3,6 +3,7 @@
 require "simplecov"
 require "simplecov-lcov"
 require "awesome_print"
+require "pry"
 
 SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new(
   [

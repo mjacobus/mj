@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
-  subject(:resolver) { described_class.new }
+  subject(:resolver) { described_class.new(**args) }
+
+  let(:args) { {} }
 
   it "extends base class" do
     expect(resolver).to be_a(Mj::AlternativeFile::Resolvers::Base)
@@ -24,6 +26,19 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsResolver do
       result = resolve("app/models/users/profile.rb")
 
       expect(result).to include(create_candidate("test/models/users/profile_test.rb", "minitest"))
+    end
+
+    context "when root is set" do
+      let(:args) { { root: "components/core/" } }
+
+      it "resolves from spec file" do
+        result = resolve("components/core/app/models/users/profile.rb")
+
+        expect(result).to include(create_candidate(
+                                    "components/core/test/models/users/profile_test.rb",
+                                    "minitest"
+                                  ))
+      end
     end
   end
 

@@ -6,7 +6,7 @@ module AlternativeFileSpecHelper
   end
 
   def resolve(file)
-    described_class.new.resolve(Mj::AlternativeFile::CurrentFile.new(file))
+    resolver.resolve(Mj::AlternativeFile::CurrentFile.new(file))
   end
 
   def resolvers

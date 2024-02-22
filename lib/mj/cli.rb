@@ -3,6 +3,7 @@
 require "thor"
 require_relative "version"
 require_relative "alternative_file/thor_command"
+require_relative "graphql/thor_command"
 
 module Mj
   class Cli < Thor
@@ -17,5 +18,8 @@ module Mj
 
     desc "alternative_file", "Lists alternative files"
     subcommand "alternative_file", AlternativeFile::ThorCommand
+
+    desc "graphql", "CLI client for GraphQL"
+    subcommand "graphql", GraphQL::ThorCommand
   end
 end

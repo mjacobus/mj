@@ -40,8 +40,7 @@ Your graqphql fiel is a regular file with variables at the top:
 # gql-endpoint: http://api.myapi.me/graphql
 # gql-header: Authorization: Bearer cb923f33617877578961a19cf4566ec2
 # gql-header: Content-Type: application/json
-# gql-header: Cookie: ajs_user_id=ae3948ee-345e-47f2-8e2f-54277858e2c2; ajs_anonymous_id=30880a34-276e-4a86-a1d3-8869d1669199; _ga=GA1.1.649149230.1706868690; browser_id=14af87a406ec54cbe9804ea25c8f0a84; _ga_TZKSP5TS45=GS1.1.1708606615.26.1.1708606911.0.0.0
-# gql-variables: { "input": { "id": "yTXuIgoU88LKUNDLSVPFFjOSkgxlyyuSrNki3GY=" } }
+# gql-variables: { "input": { "id": "some-id" } }
 
 query QueryAccountUsers(
   $input: AccountInput!

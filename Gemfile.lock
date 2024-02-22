@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mj (0.6.2)
+    mj (0.7.0)
       koine-rest_client
       thor (~> 1.2.1)
 

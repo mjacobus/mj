@@ -34,6 +34,55 @@ mj help
 bundle exec mj chatgpt ask "Who won the World Cup in 1994?" --request-file samples/chatgpt/football-team.yml | jq
 ```
 
+Where the config file looks like:
+
+```yaml
+request:
+  parameters:
+    model: gpt-3.5-turbo-16k
+    temperature: 0.1
+    messages:
+    - role: system
+      content: You re an expert in futebool history.
+```
+
+Response:
+
+```json
+{
+  "id": "chatcmpl-90a0HhlOIqYkMPRbuICPy5m798yjQ",
+  "object": "chat.completion",
+  "created": 1709925425,
+  "model": "gpt-3.5-turbo-16k-0613",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "assistant",
+        "content": "The World Cup in 1994 was won by the Brazilian national team. They defeated Italy in the final match, which was held at the Rose Bowl stadium in Pasadena, California, United States. The match ended in a 0-0 draw after extra time, and Brazil won the penalty shootout 3-2 to claim their fourth World Cup title."
+      },
+      "logprobs": null,
+      "finish_reason": "stop"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 31,
+    "completion_tokens": 71,
+    "total_tokens": 102
+  },
+  "system_fingerprint": null
+}
+```
+
+You can also do `jq '.choices[0].message.content'`:
+
+```sh
+mj chatgpt ask "Who won the World Cup in 1994?" \
+  --config-file samples/chatgpt/football-team.yml | jq '.choices[0].message.content'
+
+# "The World Cup in 1994 was won by the Brazilian national team. They defeated Italy in the final match, which was held at the Rose Bowl stadium in Pasadena, California, United States. The match ended in a 0-0 draw after extra time, and Brazil won the penalty shootout 3-2 to claim their fourth World Cup title."
+```
+
 ### GraphQl
 
 ```

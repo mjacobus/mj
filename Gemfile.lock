@@ -124,6 +124,7 @@ DEPENDENCIES
   rubocop-rspec
   simplecov
   simplecov-lcov
+  uri (~> 0.13)
 
 BUNDLED WITH
    2.3.16

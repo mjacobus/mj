@@ -4,6 +4,7 @@ require "thor"
 require_relative "version"
 require_relative "alternative_file/thor_command"
 require_relative "graphql/thor_command"
+require_relative "chatgpt/thor_command"
 
 module Mj
   class Cli < Thor
@@ -21,5 +22,8 @@ module Mj
 
     desc "graphql", "CLI client for GraphQL"
     subcommand "graphql", GraphQL::ThorCommand
+
+    desc "chatgpt", "CLI client for ChatGPT"
+    subcommand "chatgpt", ChatGpt::ThorCommand
   end
 end

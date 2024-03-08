@@ -28,6 +28,12 @@ Or install it yourself as:
 mj help
 ```
 
+### ChatGPT
+
+```
+bundle exec mj chatgpt ask "Who won the World Cup in 1994?" --request-file samples/chatgpt/football-team.yml | jq
+```
+
 ### GraphQl
 
 ```

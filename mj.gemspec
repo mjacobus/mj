@@ -33,6 +33,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "koine-rest_client"
   spec.add_dependency "thor", "~> 1.2.1"
+  spec.add_dependency "openai"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

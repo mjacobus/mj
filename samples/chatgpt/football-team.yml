@@ -1,0 +1,2 @@
+# samples/chatgpt/football-team.yml
+# usage: bundle exec mj chatgpt ask "Who won the World Cup in 1994?" --config samples/chatgpt/football-team.yml | jq

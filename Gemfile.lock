@@ -7,6 +7,7 @@ PATH
       mj-hash_utils
       ruby-openai (~> 6.2.0)
       thor (~> 1.2.1)
+      uri (~> 0.13.0)
 
 GEM
   remote: https://rubygems.org/
@@ -113,6 +114,7 @@ GEM
     uri (0.13.0)
 
 PLATFORMS
+  arm64-darwin-23
   ruby
 
 DEPENDENCIES
@@ -131,4 +133,4 @@ DEPENDENCIES
   uri (~> 0.13)
 
 BUNDLED WITH
-   2.3.16
+   2.5.17

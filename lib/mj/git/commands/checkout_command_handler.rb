@@ -1,0 +1,46 @@
+require_relative "../branches"
+
+module Mj
+  module Git
+    module Commands
+      class CheckoutCommandHandler
+        def initialize(stdout:, command_executer: CommandExecuter.new)
+          @stdout = stdout
+          @command_executer = command_executer
+        end
+
+        def handle(command)
+          branches = @command_executer.execute("git branch -a")
+          branches = Git::Branches.from_branch_names(branches).matching(command.branch)
+
+          if branches.length > 1
+            warn_multiple_matches(branches)
+          end
+
+          winner = branches.first
+
+          @stdout.puts("Executing: #{winner.checkout_command}")
+
+          if command.dry_run?
+            return
+          end
+
+          @command_executer.execute(winner.checkout_command)
+        end
+
+        private
+
+        def warn_multiple_matches(branches)
+          @stdout.puts("Multiple branches found:")
+          branches.each do |branch|
+            @stdout.puts("\t#{branch.name}")
+          end
+        end
+
+        def puts(string)
+          @stdout.puts(string)
+        end
+      end
+    end
+  end
+end

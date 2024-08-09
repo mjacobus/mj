@@ -1,4 +1,5 @@
 require_relative "../branches"
+require "colorize"
 
 module Mj
   module Git
@@ -13,13 +14,13 @@ module Mj
           branches = @command_executer.execute("git branch -a")
           branches = Git::Branches.from_branch_names(branches).matching(command.branch)
 
-          if branches.length > 1
+          if branches.to_local.uniq.length > 1
             warn_multiple_matches(branches)
           end
 
-          winner = branches.first
+          winner = branches.sort_by(&:length).first
 
-          @stdout.puts("Executing: #{winner.checkout_command}")
+          puts("#{winner.checkout_command}", color: :green)
 
           if command.dry_run?
             return
@@ -31,13 +32,19 @@ module Mj
         private
 
         def warn_multiple_matches(branches)
-          @stdout.puts("Multiple branches found:")
+          puts("Multiple branches found:", color: :blue)
+
           branches.each do |branch|
-            @stdout.puts("\t#{branch.name}")
+            puts("\t#{branch.name}", color: :yellow)
           end
+          puts("\n")
         end
 
-        def puts(string)
+        def puts(string, color: nil)
+          if color
+            string = string.colorize(color)
+          end
+
           @stdout.puts(string)
         end
       end

@@ -31,6 +31,7 @@ Gem::Specification.new do |spec|
   spec.executables = spec.files.grep(%r{\Aexe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
+  spec.add_dependency "colorize"
   spec.add_dependency "koine-rest_client"
   spec.add_dependency "mj-hash_utils"
   spec.add_dependency "ruby-openai", "~> 6.2.0"

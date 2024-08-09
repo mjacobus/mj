@@ -20,6 +20,19 @@ module Mj
         new(branches)
       end
 
+      def to_local
+        self.class.new(map(&:to_local))
+      end
+
+      def uniq
+        branches = {}
+        each do |branch|
+          branches[branch.name] ||= branch
+        end
+
+        self.class.new(branches.values)
+      end
+
       def initialize(branches)
         @branches = branches
       end

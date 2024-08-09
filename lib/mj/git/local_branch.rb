@@ -7,8 +7,16 @@ module Mj
         @name = name
       end
 
+      def length
+        @name.length
+      end
+
       def checkout_command
         "git checkout #{name}"
+      end
+
+      def to_local
+        self
       end
     end
   end

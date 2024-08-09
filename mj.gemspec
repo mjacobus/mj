@@ -36,6 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "mj-hash_utils"
   spec.add_dependency "ruby-openai", "~> 6.2.0"
   spec.add_dependency "thor", "~> 1.2.1"
+  spec.add_dependency "uri", "~> 0.13.0"
 
   # For more information and examples about making a new gem, check out our
   # guide at: https://bundler.io/guides/creating_gem.html

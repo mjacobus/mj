@@ -16,11 +16,11 @@ gem 'mj'
 
 And then execute:
 
-    $ bundle install
+    bundle install
 
 Or install it yourself as:
 
-    $ gem install mj
+    gem install mj
 
 ## Usage
 
@@ -28,10 +28,21 @@ Or install it yourself as:
 mj help
 ```
 
+### Git
+
+```
+bundle exec mj git checkout partial-branch-name           # it will create a local branch if that is remote only
+bundle exec mj git checkout partial-branch-name --dry-run # if you want to see the command before executing
+```
+
+```
+
 ### ChatGPT
 
 ```
+
 bundle exec mj chatgpt ask "Who won the World Cup in 1994?" --request-file samples/chatgpt/football-team.yml | jq
+
 ```
 
 Where the config file looks like:
@@ -113,7 +124,6 @@ query QueryAccountUsers(
 }
 ```
 
-
 ### Alternative file
 
 Examples:
@@ -180,7 +190,6 @@ end
 
 This way I can use `<leader>a{direction}`, where `k` is `next`, and `j` is `previous` alternative file.
 
-
 ## Development
 
 After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
@@ -189,7 +198,7 @@ To install this gem onto your local machine, run `bundle exec rake install`. To 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/mjacobus/mj. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/mjacobus/mj/blob/main/CODE_OF_CONDUCT.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/mjacobus/mj>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [code of conduct](https://github.com/mjacobus/mj/blob/main/CODE_OF_CONDUCT.md).
 
 ## License
 

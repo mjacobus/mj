@@ -11,6 +11,14 @@ module Mj
         "git checkout -b #{local_branch_name} #{name}"
       end
 
+      def length
+        @name.length
+      end
+
+      def to_local
+        LocalBranch.new(local_branch_name)
+      end
+
       private
 
       def local_branch_name

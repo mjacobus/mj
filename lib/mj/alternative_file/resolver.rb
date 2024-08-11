@@ -13,10 +13,8 @@ module Mj
 
       def resolve(file)
         file = AlternativeFile::CurrentFile.new(file.to_s)
-        resolved = []
-
-        @stack.each do |resolver|
-          resolved.push(resolver.resolve(file))
+        resolved = @stack.map do |resolver|
+          resolver.resolve(file)
         end
 
         AlternativeFile::Candidates.new(resolved.flatten.compact)

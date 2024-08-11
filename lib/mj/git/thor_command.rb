@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "commands/checkout_command_handler"
 require_relative "commands/checkout_command"
 require_relative "command_executer"

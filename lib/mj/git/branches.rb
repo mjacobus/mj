@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "local_branch"
 require_relative "remote_branch"
 

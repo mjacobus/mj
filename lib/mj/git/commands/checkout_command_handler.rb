@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "../branches"
 require "colorize"
 
@@ -18,9 +20,9 @@ module Mj
             warn_multiple_matches(branches)
           end
 
-          winner = branches.sort_by(&:length).first
+          winner = branches.min_by(&:length)
 
-          puts("#{winner.checkout_command}", color: :green)
+          puts(winner.checkout_command, color: :green)
 
           if command.dry_run?
             return

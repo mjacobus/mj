@@ -22,6 +22,11 @@ module Mj
 
           winner = branches.min_by(&:length)
 
+          if winner.nil?
+            puts("No branche found matching #{command.branch}", color: :red)
+            exit(1)
+          end
+
           puts(winner.checkout_command, color: :green)
 
           if command.dry_run?

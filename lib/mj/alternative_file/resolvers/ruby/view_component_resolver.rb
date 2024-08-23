@@ -9,10 +9,10 @@ module Mj
 
           def apply_to?(file)
             file.end_with?(
-              "component.rb",
-              "component.html.erb",
-              "component_test.rb",
-              "component_spec.rb"
+              ".rb",
+              ".html.erb",
+              "_test.rb",
+              "_spec.rb"
             )
           end
 
@@ -28,10 +28,17 @@ module Mj
             file = file.sub(/_component(_test|_spec)?.rb$/, "_component.html.erb")
             file = file.sub(/^(spec|test)/, "app")
             add_candidate(file, "component_template", to: candidates)
+
+            file = file.sub(/(_test|_spec)?.rb$/, ".html.erb")
+            file = file.sub(/^(spec|test)/, "app")
+            add_candidate(file, "component_template", to: candidates)
           end
 
           def resolve_component_class(file, candidates)
             file_name = file.sub(/_component.html.erb$/, "_component.rb")
+            add_candidate(file_name, "component_class", to: candidates)
+
+            file_name = file.sub(/.html.erb$/, ".rb")
             add_candidate(file_name, "component_class", to: candidates)
           end
         end

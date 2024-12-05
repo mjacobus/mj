@@ -21,7 +21,7 @@ module Mj
             @after_date ||= DateTime.parse(@options[:after_date])
           end
 
-          # Default to 100 years ago - sure there are no commits that old
+          # Default to 100+ years ago - sure there are no commits that old
           @after_date ||= DateTime.new(1900, 1, 1, 0, 0, 0)
         end
 

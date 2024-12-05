@@ -43,12 +43,12 @@ module Mj
           end
 
           if branch.last_commit_date >= command.before_date
-            puts("Skipping #{branch.name}. Not before #{command.before_date}", color: :yellow)
+            puts("Skipping #{branch.name}. Not before #{command.before_date}.", color: :yellow)
             return false
           end
 
           if branch.last_commit_date < command.after_date
-            puts("Skipping #{branch.name}. Not after #{command.after_date}", color: :yellow)
+            puts("Skipping #{branch.name}. Not after #{command.after_date}.", color: :yellow)
             return false
           end
 
@@ -68,7 +68,7 @@ module Mj
         def delete(branch)
           branch.delete
         rescue Mj::Git::CommandExecuter::Error => exception
-          puts("Could not delete branch #{branch.name}: #{exception.message}", color: :red)
+          puts("Could not delete branch #{branch.name}: #{exception.message}.", color: :red)
         end
 
         def puts(string, color: nil)

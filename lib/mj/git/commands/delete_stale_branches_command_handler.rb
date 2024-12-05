@@ -33,22 +33,20 @@ module Mj
             unless command.dry_run?
               delete(branch)
             end
-
-            return
           end
         end
 
-        def delete?(branch, command:)
+        def delete?(branch, command:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
           if branch.last_commit_date >= command.before_date
             puts("Skipping #{branch.name}. Not before #{command.before_date}", color: :yellow)
             return false
           end
 
-          if command.only_with_prs && !branch.has_pr?
+          if command.only_with_prs && branch.pr.nil
             puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
           end
 
-          if command.only_with_closed_prs && !branch.pr_closed?
+          if command.only_with_closed_prs && !branch.pr&.closed?
             puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
           end
 

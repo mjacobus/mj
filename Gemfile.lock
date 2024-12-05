@@ -111,7 +111,7 @@ GEM
     strscan (3.1.0)
     thor (1.2.2)
     unicode-display_width (2.5.0)
-    uri (0.13.0)
+    uri (0.13.1)
 
 PLATFORMS
   arm64-darwin-23

@@ -33,6 +33,12 @@ mj help
 ```
 bundle exec mj git checkout partial-branch-name           # it will create a local branch if that is remote only
 bundle exec mj git checkout partial-branch-name --dry-run # if you want to see the command before executing
+
+bundle exec mj git delete_stale_branches \
+  [--dry-run] \
+  [--only-with-prs] \
+  [--only-with-closed-prs] \
+  [--before-date=2021-01-01]
 ```
 
 ```

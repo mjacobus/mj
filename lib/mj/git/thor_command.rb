@@ -17,7 +17,7 @@ module Mj
         handler.handle(command)
       end
 
-      desc "delete_stale_branches", "Partial branch"
+      desc "delete_stale_branches", "Delete remote stale branches"
       option :dry_run,
              type: :boolean,
              banner: "Just outputs, does not delete",

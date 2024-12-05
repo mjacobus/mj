@@ -22,10 +22,13 @@ module Mj
              type: :boolean,
              banner: "Just outputs, does not delete",
              aliases: :d
-      option :only_with_prs, type: :boolean, banner: "Only branches tht have PRs", aliases: :p
+      option :only_with_prs,
+             type: :boolean,
+             banner: "Only branches that have PRs (Branch can be restored from PR page)",
+             aliases: :p
       option :only_with_closed_prs,
              type: :boolean,
-             banner: "Only branches tht have PRs that are merged or closed",
+             banner: "Do not delete if PRs are in DRAFT or OPEN - will they maybe be merged?",
              aliases: :c
       option :before_date,
              type: :string,

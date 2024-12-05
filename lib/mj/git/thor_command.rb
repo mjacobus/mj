@@ -18,10 +18,19 @@ module Mj
       end
 
       desc "delete_stale_branches", "Partial branch"
-      option :dry_run, type: :boolean, banner: "Just outputs, does not delete", aliases: :d
+      option :dry_run,
+             type: :boolean,
+             banner: "Just outputs, does not delete",
+             aliases: :d
       option :only_with_prs, type: :boolean, banner: "Only branches tht have PRs", aliases: :p
-      option :only_with_closed_prs, type: :boolean, banner: "Only branches tht have PRs that are merged or closed", aliases: :c
-      option :before_date, type: :string, banner: "Formatted date YYY-MM-DD", aliases: :b
+      option :only_with_closed_prs,
+             type: :boolean,
+             banner: "Only branches tht have PRs that are merged or closed",
+             aliases: :c
+      option :before_date,
+             type: :string,
+             banner: "Formatted date YYY-MM-DD",
+             aliases: :b
       def delete_stale_branches
         command = Commands::DeleteStaleBranchesCommand.new(options: options)
         handler = Commands::DeleteStaleBranchesCommandHandler.new(stdout: $stdout)

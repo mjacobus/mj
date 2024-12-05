@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    mj (1.0.1)
+    mj (1.1.0)
       colorize
       koine-rest_client
       mj-hash_utils

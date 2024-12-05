@@ -53,7 +53,7 @@ module Mj
           end
 
           if command.only_with_closed_prs && !branch.pr.closed?
-            puts("Skipping #{branch.name}. PR not closed - status: #{branch.pr.status}.", color: :yellow)
+            puts("Skipping #{branch.name}. PR not closed - state: #{branch.pr.state}.", color: :yellow)
             return false
           end
 

@@ -10,7 +10,7 @@ module Mj
         end
 
         def handle(command)
-          puts("Deleting stale branches", color: :green)
+          puts("Deleting stale branches", color: :blue)
 
           list_command = "git branch -a"
           list_command += " | grep remotes/ | grep -v '/HEAD'"
@@ -37,6 +37,11 @@ module Mj
         end
 
         def delete?(branch, command:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+          if %w[master main].include?(branch.to_local.name)
+            puts("Skipping #{branch.name}. No, no, no, no.", color: :red)
+            return false
+          end
+
           if branch.last_commit_date >= command.before_date
             puts("Skipping #{branch.name}. Not before #{command.before_date}", color: :yellow)
             return false

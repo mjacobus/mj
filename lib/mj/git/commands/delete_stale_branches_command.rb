@@ -12,7 +12,6 @@ module Mj
           @options[:dry_run]
         end
 
-        # Date is now, because everything is before now
         def before_date
           if @before_date
             return @before_date
@@ -22,6 +21,7 @@ module Mj
             @before_date ||= DateTime.parse(@options[:before_date])
           end
 
+          # Default to now, because all things happened before now.
           @before_date ||= DateTime.now
         end
 

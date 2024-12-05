@@ -43,6 +43,10 @@ module Mj
         @branches.each(&block)
       end
 
+      def sort_by(&block)
+        self.class.new(@branches.sort_by(&block))
+      end
+
       def length
         @branches.length
       end

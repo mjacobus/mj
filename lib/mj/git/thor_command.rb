@@ -30,6 +30,10 @@ module Mj
              type: :boolean,
              banner: "Do not delete if PRs are in DRAFT or OPEN - will they maybe be merged?",
              aliases: :c
+      option :after_date,
+             type: :string,
+             banner: "Formatted date YYY-MM-DD",
+             aliases: :a
       option :before_date,
              type: :string,
              banner: "Formatted date YYY-MM-DD",

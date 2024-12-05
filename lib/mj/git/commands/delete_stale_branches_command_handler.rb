@@ -47,6 +47,11 @@ module Mj
             return false
           end
 
+          if branch.last_commit_date < command.after_date
+            puts("Skipping #{branch.name}. Not after #{command.after_date}", color: :yellow)
+            return false
+          end
+
           if (command.only_with_prs || command.only_with_closed_prs) && branch.pr.nil?
             puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
             return false

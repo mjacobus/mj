@@ -5,20 +5,18 @@ module Mj
     class PullRequest
       attr_reader :number
       attr_reader :title
-      attr_reader :head
-      attr_reader :status
+      attr_reader :state
       attr_reader :updated_at
 
-      def initialize(number:, title:, head:, status:, updated_at:)
+      def initialize(number:, title:, state:, updated_at:)
         @number = number
         @title = title
-        @status = status
-        @head = head
+        @state = state
         @updated_at = updated_at
       end
 
       def closed?
-        status == "MERGED" || status == "CLOSED"
+        state == "MERGED" || state == "CLOSED"
       end
     end
   end

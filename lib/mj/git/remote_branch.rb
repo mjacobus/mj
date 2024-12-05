@@ -51,21 +51,25 @@ module Mj
       end
 
       def fetch_pr # rubocop:disable Metrics/MethodLength
-        data = @command_executer.execute("gh pr list --head #{local_branch_name}").first
-        data = data.to_s.split("\t")
+        data = @command_executer.execute(
+          "gh pr list --head #{local_branch_name} --state=all --json=number,state,title,updatedAt"
+        )
 
-        if data.empty?
+        data = JSON.parse(data.join("")).first
+
+        if data.nil?
           return
         end
 
         # I.E. ["14", "WIP on packer", "handle-packer-files", "DRAFT", "2022-03-14T20:14:17Z"]
         Git::PullRequest.new(
-          number: data[0],
-          title: data[1],
-          head: data[2],
-          status: data[3],
-          updated_at: DateTime.parse(data[4])
+          number: data['number'],
+          title: data['title'],
+          state: data['state'],
+          updated_at: DateTime.parse(data['updatedAt'])
         )
+      rescue StandardError
+        nil
       end
     end
   end

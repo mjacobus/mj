@@ -42,12 +42,14 @@ module Mj
             return false
           end
 
-          if command.only_with_prs && branch.pr.nil
+          if (command.only_with_prs || command.only_with_closed_prs) && branch.pr.nil?
             puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
+            return false
           end
 
-          if command.only_with_closed_prs && !branch.pr&.closed?
-            puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
+          if command.only_with_closed_prs && !branch.pr.closed?
+            puts("Skipping #{branch.name}. PR not closed - status: #{branch.pr.status}.", color: :yellow)
+            return false
           end
 
           true

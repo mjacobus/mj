@@ -62,8 +62,8 @@ module Mj
 
         def delete(branch)
           branch.delete
-        rescue StandardError => exception
-          log("Could not delete branch #{branch.name}: #{exception.message}", color: :red)
+        rescue Mj::Git::CommandExecuter::Error => exception
+          puts("Could not delete branch #{branch.name}: #{exception.message}", color: :red)
         end
 
         def puts(string, color: nil)

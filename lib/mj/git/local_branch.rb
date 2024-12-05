@@ -5,8 +5,9 @@ module Mj
     class LocalBranch
       attr_reader :name
 
-      def initialize(name)
+      def initialize(name, command_executer: CommandExecuter.new)
         @name = name
+        @command_executer = command_executer
       end
 
       def length

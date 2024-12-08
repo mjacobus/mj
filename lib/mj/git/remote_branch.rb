@@ -39,13 +39,13 @@ module Mj
       end
 
       def summary
-        parts = [name]
+        parts = []
+
+        parts << "Last Commited by #{last_commiter_name} (#{last_commiter_email}) on #{last_commit_date.strftime("%Y-%m-%d")}"
 
         if @pr
           parts << "PR ##{pr.number} by #{pr.author.login}"
         end
-
-        parts << "Last Commited by #{last_commiter_name} (#{last_commiter_email}) on #{last_commit_date.strftime("%Y-%m-%d")}"
 
         parts.join(", ")
       end

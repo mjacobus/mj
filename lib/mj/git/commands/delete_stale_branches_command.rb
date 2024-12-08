@@ -45,6 +45,14 @@ module Mj
         def only_with_closed_prs
           @options[:only_with_closed_prs]
         end
+
+        def from_pull_requestors
+          @options[:from_pull_requestors].to_s.split(",")
+        end
+
+        def from_commiters
+          @options[:from_commiters].to_s.split(",")
+        end
       end
     end
   end

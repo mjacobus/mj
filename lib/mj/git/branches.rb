@@ -3,6 +3,7 @@
 require_relative "local_branch"
 require_relative "remote_branch"
 require_relative "pull_request"
+require_relative "pull_request_author"
 
 module Mj
   module Git

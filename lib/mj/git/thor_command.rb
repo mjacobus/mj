@@ -38,6 +38,14 @@ module Mj
              type: :string,
              banner: "Formatted date YYY-MM-DD",
              aliases: :b
+      option :from_pull_requestors,
+             type: :string,
+             banner: "Comma separated github usernames",
+             aliases: :u
+      option :from_commiters,
+             type: :string,
+             banner: "Comma separated commiter emails - assumes last commiter",
+             aliases: :e
       def delete_stale_branches
         command = Commands::DeleteStaleBranchesCommand.new(options: options)
         handler = Commands::DeleteStaleBranchesCommandHandler.new(stdout: $stdout)

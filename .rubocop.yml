@@ -66,6 +66,9 @@ Style/GuardClause:
 Style/IfUnlessModifier:
   Enabled: false
 
+Style/NegatedIf:
+  Enabled: false
+
 Style/StringLiterals:
   Enabled: true
   EnforcedStyle: double_quotes

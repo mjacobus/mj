@@ -28,7 +28,7 @@ module Mj
 
         def delete_branch(branch, command:)
           if delete?(branch, command: command)
-            puts("Deleting branch #{branch.name}", color: :green)
+            puts("Deleting branch #{branch.summary}", color: :green)
 
             unless command.dry_run?
               delete(branch)
@@ -36,7 +36,7 @@ module Mj
           end
         end
 
-        def delete?(branch, command:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength
+        def delete?(branch, command:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
           if %w[master main].include?(branch.to_local.name)
             puts("Skipping #{branch.name}. No, no, no, no.", color: :red)
             return false
@@ -62,6 +62,14 @@ module Mj
             return false
           end
 
+          unless pull_request_author_check(command, branch)
+            return false
+          end
+
+          unless commiter_check(command, branch)
+            return false
+          end
+
           true
         end
 
@@ -69,6 +77,35 @@ module Mj
           branch.delete
         rescue Mj::Git::CommandExecuter::Error => exception
           puts("Could not delete branch #{branch.name}: #{exception.message}.", color: :red)
+        end
+
+        def pull_request_author_check(command, branch)
+          if command.from_pull_requestors.empty?
+            return true
+          end
+
+          if branch.has_pr? && command.from_pull_requestors.include?(branch.pr.author.login)
+            return true
+          end
+
+          puts("Skipping #{branch.name}. PR not from pull requestors: #{command.from_pull_requestors.join(", ")}.",
+               color: :yellow)
+
+          false
+        end
+
+        def commiter_check(command, branch)
+          if command.from_commiters.empty?
+            return true
+          end
+
+          if command.from_commiters.map(&:downcase).include?(branch.last_commiter_email.downcase)
+            return true
+          end
+
+          puts("Skipping #{branch.name}. PR not from commiters: #{command.from_commiters.join(", ")}.", color: :yellow)
+
+          false
         end
 
         def puts(string, color: nil)

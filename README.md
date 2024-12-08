@@ -38,6 +38,8 @@ bundle exec mj git delete_stale_branches \
   [--dry-run] \
   [--only-with-prs] \
   [--only-with-closed-prs] \
+  [--from-commiters=emal@one,email@two] \
+  [--from-pull_requestors=mjacobus,other-gh-username] \
   [--after-date=2021-01-01] \
   [--before-date=2021-01-01]
 ```

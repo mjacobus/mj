@@ -28,7 +28,7 @@ module Mj
 
         def delete_branch(branch, command:)
           if delete?(branch, command: command)
-            puts("Deleting branch #{branch.summary}", color: :green)
+            puts("Deleting branch #{branch.name} \t| #{branch.summary}", color: :green)
 
             unless command.dry_run?
               delete(branch)
@@ -38,7 +38,7 @@ module Mj
 
         def delete?(branch, command:) # rubocop:disable Metrics/AbcSize,Metrics/MethodLength,Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
           if %w[master main].include?(branch.to_local.name)
-            puts("Skipping #{branch.name}. No, no, no, no.", color: :red)
+            puts("Skipping #{branch.summary}. No, no, no, no.", color: :red)
             return false
           end
 
@@ -78,7 +78,7 @@ module Mj
         end
 
         def cannot_delete(branch, reason)
-          puts("Skipping #{branch.name}. #{reason}.", color: :yellow)
+          puts("Skipping #{branch.name} \t| #{reason}.", color: :yellow)
 
           false
         end

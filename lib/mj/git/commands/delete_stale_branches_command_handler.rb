@@ -43,30 +43,28 @@ module Mj
           end
 
           if branch.last_commit_date >= command.before_date
-            puts("Skipping #{branch.name}. Not before #{command.before_date}.", color: :yellow)
-            return false
+            return cannot_delete(branch, "Not before #{command.before_date}.")
           end
 
           if branch.last_commit_date < command.after_date
-            puts("Skipping #{branch.name}. Not after #{command.after_date}.", color: :yellow)
-            return false
-          end
-
-          if (command.only_with_prs || command.only_with_closed_prs) && branch.pr.nil?
-            puts("Skipping #{branch.name}. Does not have PR.", color: :yellow)
-            return false
-          end
-
-          if command.only_with_closed_prs && !branch.pr.closed?
-            puts("Skipping #{branch.name}. PR not closed - state: #{branch.pr.state}.", color: :yellow)
-            return false
-          end
-
-          unless pull_request_author_check(command, branch)
-            return false
+            return cannot_delete(branch, "Not after #{command.after_date}.")
           end
 
           unless commiter_check(command, branch)
+            return false
+          end
+
+          # PR checks later - more efficient. May not have to check them if any of the above is falsy
+
+          if (command.only_with_prs || command.only_with_closed_prs) && branch.pr.nil?
+            return cannot_delete(branch, "Does not have a PR")
+          end
+
+          if command.only_with_closed_prs && !branch.pr.closed?
+            return cannot_delete(branch, "PR not closed - state: #{branch.pr.state}.")
+          end
+
+          unless pull_request_author_check(command, branch)
             return false
           end
 
@@ -79,6 +77,12 @@ module Mj
           puts("Could not delete branch #{branch.name}: #{exception.message}.", color: :red)
         end
 
+        def cannot_delete(branch, reason)
+          puts("Skipping #{branch.name}. #{reason}.", color: :yellow)
+
+          false
+        end
+
         def pull_request_author_check(command, branch)
           if command.from_pull_requestors.empty?
             return true
@@ -88,10 +92,7 @@ module Mj
             return true
           end
 
-          puts("Skipping #{branch.name}. PR not from pull requestors: #{command.from_pull_requestors.join(", ")}.",
-               color: :yellow)
-
-          false
+          cannot_delete(branch, "PR not from pull requestors: #{command.from_pull_requestors.join(", ")}.")
         end
 
         def commiter_check(command, branch)
@@ -103,9 +104,7 @@ module Mj
             return true
           end
 
-          puts("Skipping #{branch.name}. PR not from commiters: #{command.from_commiters.join(", ")}.", color: :yellow)
-
-          false
+          cannot_delete(branch, "PR not from commiters: #{command.from_commiters.join(", ")}.")
         end
 
         def puts(string, color: nil)

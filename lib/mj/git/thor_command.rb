@@ -32,11 +32,11 @@ module Mj
              aliases: :c
       option :after_date,
              type: :string,
-             banner: "Formatted date YYY-MM-DD",
+             banner: "Formatted date YYYY-MM-DD",
              aliases: :a
       option :before_date,
              type: :string,
-             banner: "Formatted date YYY-MM-DD",
+             banner: "Formatted date YYYY-MM-DD",
              aliases: :b
       option :from_pull_requestors,
              type: :string,

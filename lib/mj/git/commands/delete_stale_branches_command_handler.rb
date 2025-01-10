@@ -100,7 +100,9 @@ module Mj
             return true
           end
 
-          if command.from_commiters.map(&:downcase).include?(branch.last_commiter_email.downcase)
+          email = branch.last_commiter_email
+
+          if email && command.from_commiters.map(&:downcase).include?(email)
             return true
           end
 

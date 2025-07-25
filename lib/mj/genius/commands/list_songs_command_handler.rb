@@ -17,13 +17,11 @@ module Mj
         # Process the ListSongs command
         # @param [ListSongs] command The list songs command object
         def handle(command)
-          artist = command.artist
-
-          if numeric?(artist)
-            fetch_and_display_songs_by_artist_id(artist)
-          else
-            process_artist_search(artist)
+          if command.artist_id?
+            return fetch_and_display_songs_by_artist_id(command.artist_id)
           end
+
+          process_artist_search(command.artist)
         rescue NetworkError => exception
           @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
         rescue ApiError => exception
@@ -33,10 +31,6 @@ module Mj
         end
 
         private
-
-        def numeric?(value)
-          value.to_s.match?(/\A\d+\z/)
-        end
 
         def fetch_and_display_songs_by_artist_id(artist_id)
           page = 1
@@ -59,12 +53,14 @@ module Mj
           artists = response.map { |hit| hit["result"]["primary_artist"] }.uniq
 
           if artists.size > 1
-            display_ambiguous_artists(artist_name, artists)
-          elsif artists.any?
-            fetch_and_display_songs_by_artist_id(artists.first["id"])
-          else
-            @stdout.puts "No results found for artist: \"#{artist_name}\""
+            return display_ambiguous_artists(artist_name, artists)
           end
+
+          if artists.any?
+            return fetch_and_display_songs_by_artist_id(artists.first["id"])
+          end
+
+          @stdout.puts "No results found for artist: \"#{artist_name}\""
         end
 
         def display_ambiguous_artists(artist_name, artists)

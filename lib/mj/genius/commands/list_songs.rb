@@ -14,6 +14,16 @@ module Mj
           @artist = artist
           @options = options
         end
+
+        def artist_id
+          if artist_id?
+            artist.to_i
+          end
+        end
+
+        def artist_id?
+          artist.to_s.match?(/\A\d+\z/)
+        end
       end
     end
   end

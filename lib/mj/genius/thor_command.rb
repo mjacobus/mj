@@ -15,10 +15,22 @@ module Mj
           stdout: $stdout,
           api_client: api_client
         )
-        handler.handle(command)
+        songs = handler.handle(command)
+
+        display_songs(songs)
       end
 
       private
+
+      # TODO: move to a command
+      def display_songs(songs)
+        sorted_songs = songs.sort_by(&:title)
+
+        $stdout.puts "Songs:\n"
+        sorted_songs.each_with_index do |song, index|
+          $stdout.puts "#{index.next}. #{song.title}"
+        end
+      end
 
       def api_client
         ApiClient.new(

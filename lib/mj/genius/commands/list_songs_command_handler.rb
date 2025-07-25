@@ -44,7 +44,7 @@ module Mj
             page += 1
           end
 
-          display_songs(songs)
+          songs
         end
 
         def process_artist_search(artist_name)
@@ -75,14 +75,6 @@ module Mj
           @stdout.puts "./bin/mj genius list_songs <artist_id>"
         end
 
-        def display_songs(songs)
-          sorted_songs = songs.sort_by(&:title)
-
-          @stdout.puts "Songs:\n"
-          sorted_songs.each_with_index do |song, index|
-            @stdout.puts "#{index.next}. #{song.title}"
-          end
-        end
       end
     end
   end

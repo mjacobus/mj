@@ -22,12 +22,12 @@ module Mj
           end
 
           process_artist_search(command.artist)
-        rescue NetworkError => exception
-          @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
-        rescue ApiError => exception
-          @stdout.puts "API Error: #{exception.message}. Please verify your request and try again."
-        rescue StandardError => exception
-          @stdout.puts "Unexpected Error: #{exception.message}. Please contact support if this persists."
+        # rescue NetworkError => exception
+        #   @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
+        # rescue ApiError => exception
+        #   @stdout.puts "API Error: #{exception.message}. Please verify your request and try again."
+        # rescue StandardError => exception
+        #   @stdout.puts "Unexpected Error: #{exception.message}. Please contact support if this persists."
         end
 
         private
@@ -76,11 +76,11 @@ module Mj
         end
 
         def display_songs(songs)
-          sorted_songs = songs.sort_by { |song| song["title"] }
+          sorted_songs = songs.sort_by(&:title)
 
           @stdout.puts "Songs:\n"
-          sorted_songs.each do |song|
-            @stdout.puts song["title"]
+          sorted_songs.each_with_index do |song, index|
+            @stdout.puts "#{index.next}. #{song.title}"
           end
         end
       end

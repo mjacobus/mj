@@ -32,7 +32,9 @@ module Mj
       def fetch_songs_by_artist_id(artist_id, page:, per_page:)
         uri = URI("#{API_BASE_URL}/artists/#{artist_id}/songs?per_page=#{per_page}&page=#{page}")
         response = make_request(uri)
-        response["response"]["songs"]
+        response["response"]["songs"].map do |song|
+          Song.new(song)
+        end
       end
 
       private

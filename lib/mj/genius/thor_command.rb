@@ -3,6 +3,7 @@
 require_relative "api_client"
 require_relative "commands/list_songs"
 require_relative "commands/list_songs_command_handler"
+require_relative "song"
 
 module Mj
   module Genius

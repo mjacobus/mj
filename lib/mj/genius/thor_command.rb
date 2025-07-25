@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require_relative "api_client"
+require_relative "commands/list_songs"
+require_relative "commands/list_songs_command_handler"
+
 module Mj
   module Genius
     class ThorCommand < Thor

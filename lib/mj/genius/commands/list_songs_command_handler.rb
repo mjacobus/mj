@@ -38,9 +38,10 @@ module Mj
 
           loop do
             response = @api_client.fetch_songs_by_artist_id(artist_id, page: page, per_page: PER_PAGE)
-            break if response.empty?
-
             songs.concat(response)
+
+            break if response.size < PER_PAGE
+
             page += 1
           end
 

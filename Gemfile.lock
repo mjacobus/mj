@@ -5,6 +5,7 @@ PATH
       colorize
       koine-rest_client
       mj-hash_utils
+      ostruct
       ruby-openai (~> 6.2.0)
       thor (~> 1.2.1)
       uri (~> 0.13.0)
@@ -54,6 +55,7 @@ GEM
     multipart-post (2.4.1)
     net-http (0.4.1)
       uri
+    ostruct (0.6.3)
     parallel (1.26.1)
     parser (3.3.4.2)
       ast (~> 2.4.1)

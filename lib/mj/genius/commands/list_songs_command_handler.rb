@@ -22,12 +22,12 @@ module Mj
           end
 
           process_artist_search(command.artist)
-        # rescue NetworkError => exception
-        #   @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
-        # rescue ApiError => exception
-        #   @stdout.puts "API Error: #{exception.message}. Please verify your request and try again."
-        # rescue StandardError => exception
-        #   @stdout.puts "Unexpected Error: #{exception.message}. Please contact support if this persists."
+          # rescue NetworkError => exception
+          #   @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
+          # rescue ApiError => exception
+          #   @stdout.puts "API Error: #{exception.message}. Please verify your request and try again."
+          # rescue StandardError => exception
+          #   @stdout.puts "Unexpected Error: #{exception.message}. Please contact support if this persists."
         end
 
         private
@@ -74,7 +74,6 @@ module Mj
           @stdout.puts "\nRe-run the command with the artist ID:\n"
           @stdout.puts "./bin/mj genius list_songs <artist_id>"
         end
-
       end
     end
   end

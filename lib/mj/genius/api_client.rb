@@ -20,6 +20,7 @@ module Mj
       # @return [Array<Hash>] Search results
       def search_artist(name)
         uri = URI("#{API_BASE_URL}/search?q=#{URI.encode_www_form_component(name)}")
+        log("Searching artist by name: #{name}")
         response = make_request(uri)
         response["response"]["hits"]
       end
@@ -31,6 +32,7 @@ module Mj
       # @return [Array<Hash>] Songs for the artist
       def fetch_songs_by_artist_id(artist_id, page:, per_page:)
         uri = URI("#{API_BASE_URL}/artists/#{artist_id}/songs?per_page=#{per_page}&page=#{page}")
+        log("Fetching songs", { artist_id: artist_id, page: page, per_page: per_page })
         response = make_request(uri)
         response["response"]["songs"].map do |song|
           Song.new(song)
@@ -38,6 +40,10 @@ module Mj
       end
 
       private
+
+      def log(message, params = {})
+        Mj.logger.info("[#{self.class}]: #{message} (#{params.to_json})")
+      end
 
       def make_request(uri)
         http = Net::HTTP.new(uri.host, uri.port)

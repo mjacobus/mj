@@ -12,7 +12,7 @@ module Mj
       end
 
       def title
-        @attributes['title']
+        @attributes["title"]
       end
     end
   end

@@ -16,9 +16,13 @@ GEM
       public_suffix (>= 2.0.2, < 7.0)
     ast (2.4.2)
     awesome_print (1.9.2)
+    base64 (0.3.0)
     bigdecimal (3.1.8)
     coderay (1.1.3)
     colorize (1.1.0)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     csv (3.3.0)
     diff-lcs (1.5.1)
     docile (1.4.1)
@@ -30,6 +34,7 @@ GEM
       multipart-post (~> 2)
     faraday-net_http (3.1.1)
       net-http
+    hashdiff (1.2.0)
     httparty (0.22.0)
       csv
       mini_mime (>= 1.0.0)
@@ -112,6 +117,12 @@ GEM
     thor (1.2.2)
     unicode-display_width (2.5.0)
     uri (0.13.1)
+    vcr (6.3.1)
+      base64
+    webmock (3.25.1)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
 
 PLATFORMS
   arm64-darwin-23
@@ -131,6 +142,8 @@ DEPENDENCIES
   simplecov
   simplecov-lcov
   uri (~> 0.13)
+  vcr (~> 6.3)
+  webmock
 
 BUNDLED WITH
    2.5.17

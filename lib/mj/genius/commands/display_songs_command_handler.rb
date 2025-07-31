@@ -20,7 +20,8 @@ module Mj
 
           sorted_songs.each_with_index do |song, index|
             padded_index = format("%#{padding}d", index.next).rjust(padding)
-            @stdout.puts "#{padded_index}. #{song.title}"
+            number = "#{padded_index}.".gray
+            @stdout.puts "#{number} #{song.title.blue}"
           end
         end
       end

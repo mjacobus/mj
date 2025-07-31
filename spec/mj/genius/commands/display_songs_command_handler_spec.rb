@@ -12,12 +12,15 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
       double("Song", title: "Monkey")
     ]
   end
+  let(:clean_output) { output.string.gsub(/\e\[\d+(;\d+)*m/, "") }
 
   describe "#handle" do
     it "displays songs sorted by title with correct padding" do
       handler.handle(command)
 
-      expect(output.string).to eq(
+      puts output.string
+
+      expect(clean_output).to eq(
         "Songs:\n" \
         "1. Apple\n" \
         "2. Monkey\n" \
@@ -31,7 +34,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
       it "does not pad the number" do
         handler.handle(command)
 
-        expect(output.string).to eq(
+        expect(clean_output).to eq(
           "Songs:\n" \
           "1. Song 001\n"
         )
@@ -44,7 +47,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
       it "pads the numbers to three digits" do
         handler.handle(command)
 
-        expect(output.string).to include(
+        expect(clean_output).to include(
           "Songs:\n",
           " 1. Song 001\n",
           "12. Song 012\n"
@@ -58,7 +61,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
       it "pads the numbers to three digits" do
         handler.handle(command)
 
-        expect(output.string).to include(
+        expect(clean_output).to include(
           "Songs:\n",
           "  1. Song 001\n",
           " 99. Song 099\n",

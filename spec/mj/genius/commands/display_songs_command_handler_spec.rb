@@ -5,11 +5,12 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
 
   let(:output) { StringIO.new }
   let(:command) { Mj::Genius::Commands::DisplaySongs.new(songs: songs) }
+  let(:artist) { "John Doe" }
   let(:songs) do
     [
-      double("Song", title: "Zebra"),
-      double("Song", title: "Apple"),
-      double("Song", title: "Monkey")
+      double("Song", title: "Zebra", artist:),
+      double("Song", title: "Apple", artist:),
+      double("Song", title: "Monkey", artist:)
     ]
   end
   let(:clean_output) { output.string.gsub(/\e\[\d+(;\d+)*m/, "") }
@@ -21,7 +22,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
       puts output.string
 
       expect(clean_output).to eq(
-        "Songs:\n" \
+        "Songs by John Doe:\n" \
         "1. Apple\n" \
         "2. Monkey\n" \
         "3. Zebra\n"
@@ -35,7 +36,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
         handler.handle(command)
 
         expect(clean_output).to eq(
-          "Songs:\n" \
+          "Songs by John Doe:\n" \
           "1. Song 001\n"
         )
       end
@@ -48,7 +49,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
         handler.handle(command)
 
         expect(clean_output).to include(
-          "Songs:\n",
+          "Songs by John Doe:\n" \
           " 1. Song 001\n",
           "12. Song 012\n"
         )
@@ -62,7 +63,7 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
         handler.handle(command)
 
         expect(clean_output).to include(
-          "Songs:\n",
+          "Songs by John Doe:\n" \
           "  1. Song 001\n",
           " 99. Song 099\n",
           "100. Song 100\n"
@@ -72,6 +73,6 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
   end
 
   def create_songs(number)
-    Array.new(number) { |i| double("Song", title: "Song #{format("%03d", i.next)}") }
+    Array.new(number) { |i| double("Song", title: "Song #{format("%03d", i.next)}", artist:) }
   end
 end

@@ -14,7 +14,7 @@ module Mj
         def handle(command)
           sorted_songs = command.songs.sort_by(&:title)
 
-          @stdout.puts "Songs:\n"
+          @stdout.puts "Songs by #{sorted_songs.first.artist}:\n"
           total_songs = sorted_songs.length
           padding = [total_songs.to_s.length, 1].max
 

@@ -14,6 +14,10 @@ module Mj
       def title
         @attributes["title"]
       end
+
+      def artist
+        @attributes["primary_artist"]["name"]
+      end
     end
   end
 end

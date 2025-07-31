@@ -15,10 +15,7 @@ module Mj
       option :format, type: :string, banner: "Format table or plain", aliases: :f
       def list_songs(artist_name_or_id)
         command = Commands::ListSongs.new(artist: artist_name_or_id, options: options)
-        handler = Commands::ListSongsCommandHandler.new(
-          stdout: $stdout,
-          api_client: api_client
-        )
+        handler = Commands::ListSongsCommandHandler.new(api_client: api_client)
         songs = handler.handle(command)
 
         display_command = Commands::DisplaySongs.new(songs: songs, options: options)
@@ -27,6 +24,8 @@ module Mj
       rescue Commands::ListSongsCommandHandler::AmbiguousArtistError => exception
         display_ambiguous_artists(exception.artist_name, exception.artists)
         exit(1)
+      rescue Commands::ListSongsCommandHandler::ArtistNotFoundError
+        puts "No results found for artist: \"#{artist_name_or_id}\"".red
       rescue StandardError => exception
         $stdout.puts "An error occurred:\n\t#{exception.message.red}"
         exit(1)

@@ -9,6 +9,8 @@ module Mj
       class ListSongsCommandHandler
         PER_PAGE = 50
 
+        ArtistNotFoundError = Class.new(StandardError)
+
         class AmbiguousArtistError < StandardError
           attr_accessor :artist_name, :artists
 
@@ -19,8 +21,7 @@ module Mj
           end
         end
 
-        def initialize(stdout:, api_client:)
-          @stdout = stdout
+        def initialize(api_client:)
           @api_client = api_client
         end
 
@@ -59,6 +60,10 @@ module Mj
             Artist.new(artist)
           end
 
+          if artists.empty?
+            raise ArtistNotFoundError
+          end
+
           if artists.size > 1
             raise AmbiguousArtistError.new(artist_name, artists)
           end
@@ -66,8 +71,6 @@ module Mj
           if artists.any?
             return fetch_and_display_songs_by_artist_id(artists.first.id)
           end
-
-          @stdout.puts "No results found for artist: \"#{artist_name}\""
         end
       end
     end

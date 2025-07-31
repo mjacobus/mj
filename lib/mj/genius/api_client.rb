@@ -29,7 +29,7 @@ module Mj
       # @param [Integer] artist_id The ID of the artist
       # @param [Integer] page The page number
       # @param [Integer] per_page Number of items per page
-      # @return [Array<Hash>] Songs for the artist
+      # @return [Array<Song>] Songs for the artist
       def fetch_songs_by_artist_id(artist_id, page:, per_page:)
         uri = URI("#{API_BASE_URL}/artists/#{artist_id}/songs?per_page=#{per_page}&page=#{page}")
         log("Fetching songs", { artist_id: artist_id, page: page, per_page: per_page })

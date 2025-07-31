@@ -6,6 +6,7 @@ require_relative "commands/list_songs_command_handler"
 require_relative "commands/display_songs"
 require_relative "commands/display_songs_command_handler"
 require_relative "song"
+require_relative "artist"
 
 module Mj
   module Genius

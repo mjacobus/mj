@@ -45,25 +45,28 @@ module Mj
         def process_artist_search(artist_name)
           response = @api_client.search_artist(artist_name)
 
-          artists = response.map { |hit| hit["result"]["primary_artist"] }.uniq
+          artists = response.map { |hit| hit["result"]["primary_artist"] }.uniq.map do |artist|
+            Artist.new(artist)
+          end
 
           if artists.size > 1
             return display_ambiguous_artists(artist_name, artists)
           end
 
           if artists.any?
-            return fetch_and_display_songs_by_artist_id(artists.first["id"])
+            return fetch_and_display_songs_by_artist_id(artists.first.id)
           end
 
           @stdout.puts "No results found for artist: \"#{artist_name}\""
         end
 
+        # TODO: Move to command
         def display_ambiguous_artists(artist_name, artists)
-          @stdout.puts "Ambiguous artist name: \"#{artist_name}\""
+          @stdout.puts "Ambiguous artist name: \"#{artist_name}\"".red
           @stdout.puts "Possible matches:\n"
 
           artists.each do |artist|
-            @stdout.puts "#{artist["name"]} (ID: #{artist["id"]})"
+            @stdout.puts "- #{artist.name} (ID: #{artist.id.to_s.green})"
           end
 
           @stdout.puts "\nRe-run the command with the artist ID:\n"

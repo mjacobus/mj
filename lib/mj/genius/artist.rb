@@ -2,22 +2,18 @@
 
 module Mj
   module Genius
-    class Song
+    class Artist
       # Direct attributes from the api
       def initialize(attributes)
         @attributes = attributes
       end
 
-      def title
-        @attributes["title"]
+      def id
+        @attributes["id"]
       end
 
-      def artist
-        @attributes["primary_artist"]["name"]
-      end
-
-      def artist_id
-        @attributes["primary_artist"]["id"]
+      def name
+        @attributes["name"]
       end
     end
   end

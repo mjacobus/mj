@@ -8,7 +8,7 @@ require_relative "song"
 module Mj
   module Genius
     class ThorCommand < Thor
-      desc "list <artist_name_or_id>", "Artist"
+      desc "list <artist_name_or_id>", "List songs by an artist"
       def list_songs(artist_name_or_id)
         command = Commands::ListSongs.new(artist: artist_name_or_id, options: options)
         handler = Commands::ListSongsCommandHandler.new(

@@ -22,12 +22,6 @@ module Mj
           end
 
           process_artist_search(command.artist)
-          # rescue NetworkError => exception
-          #   @stdout.puts "Network Error: #{exception.message}. Please check your internet connection."
-          # rescue ApiError => exception
-          #   @stdout.puts "API Error: #{exception.message}. Please verify your request and try again."
-          # rescue StandardError => exception
-          #   @stdout.puts "Unexpected Error: #{exception.message}. Please contact support if this persists."
         end
 
         private

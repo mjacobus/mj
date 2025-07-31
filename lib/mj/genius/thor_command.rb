@@ -23,6 +23,9 @@ module Mj
         display_command = Commands::DisplaySongs.new(songs: songs, options: options)
         display_handler = Commands::DisplaySongsCommandHandler.new(stdout: $stdout)
         display_handler.handle(display_command)
+      rescue StandardError => e
+        $stdout.puts "An error occurred:\n\t#{e.message.red}"
+        exit(1)
       end
 
       private

@@ -4,22 +4,31 @@ RSpec.describe Mj::Genius::Commands::DisplaySongsCommandHandler do
   subject(:handler) { described_class.new(stdout: output) }
 
   let(:output) { StringIO.new }
-  let(:command) { Mj::Genius::Commands::DisplaySongs.new(songs: songs) }
+  let(:command) { Mj::Genius::Commands::DisplaySongs.new(songs: songs, options: options) }
+  let(:options) { {} }
   let(:artist) { "John Doe" }
   let(:songs) do
     [
-      double("Song", title: "Zebra", artist:),
-      double("Song", title: "Apple", artist:),
-      double("Song", title: "Monkey", artist:)
+      double("Song", title: "Zebra", artist:, artist_id: 1),
+      double("Song", title: "Apple", artist:, artist_id: 1),
+      double("Song", title: "Monkey", artist:, artist_id: 1)
     ]
   end
   let(:clean_output) { output.string.gsub(/\e\[\d+(;\d+)*m/, "") }
 
   describe "#handle" do
+    context "when displays as table" do
+      let(:options) { {format: 'table'}}
+
+      it "renders" do
+        handler.handle(command)
+
+        expect(clean_output).to include('--')
+      end
+    end
+
     it "displays songs sorted by title with correct padding" do
       handler.handle(command)
-
-      puts output.string
 
       expect(clean_output).to eq(
         "Songs by John Doe:\n" \

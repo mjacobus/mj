@@ -11,6 +11,7 @@ module Mj
   module Genius
     class ThorCommand < Thor
       desc "list <artist_name_or_id>", "List songs by an artist"
+      option :format, type: :string, banner: "Format table or plain", aliases: :f
       def list_songs(artist_name_or_id)
         command = Commands::ListSongs.new(artist: artist_name_or_id, options: options)
         handler = Commands::ListSongsCommandHandler.new(
@@ -19,7 +20,7 @@ module Mj
         )
         songs = handler.handle(command)
 
-        display_command = Commands::DisplaySongs.new(songs: songs)
+        display_command = Commands::DisplaySongs.new(songs: songs, options: options)
         display_handler = Commands::DisplaySongsCommandHandler.new(stdout: $stdout)
         display_handler.handle(display_command)
       end

@@ -9,8 +9,13 @@ module Mj
 
         # Initialize with the songs to display
         # @param [Array<Song>] songs An array of song objects
-        def initialize(songs:)
+        def initialize(songs:, options: {})
           @songs = songs
+          @options = options
+        end
+
+        def format
+          @options[:format] || "plain"
         end
       end
     end

@@ -32,6 +32,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "colorize"
+  spec.add_dependency "terminal-table"
   spec.add_dependency "ostruct" # suppress warning on Pry::CommandState after ruby upgrade
   spec.add_dependency "koine-rest_client"
   spec.add_dependency "mj-hash_utils"

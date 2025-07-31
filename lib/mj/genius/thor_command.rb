@@ -24,12 +24,28 @@ module Mj
         display_command = Commands::DisplaySongs.new(songs: songs, options: options)
         display_handler = Commands::DisplaySongsCommandHandler.new(stdout: $stdout)
         display_handler.handle(display_command)
-      rescue StandardError => e
-        $stdout.puts "An error occurred:\n\t#{e.message.red}"
+      rescue Commands::ListSongsCommandHandler::AmbiguousArtistError => exception
+        display_ambiguous_artists(exception.artist_name, exception.artists)
+        exit(1)
+      rescue StandardError => exception
+        $stdout.puts "An error occurred:\n\t#{exception.message.red}"
         exit(1)
       end
 
       private
+
+      # TODO: Move to command
+      def display_ambiguous_artists(artist_name, artists)
+        puts "Ambiguous artist name: \"#{artist_name}\"".red
+        puts "Possible matches:\n"
+
+        artists.each do |artist|
+          puts "- #{artist.name} (ID: #{artist.id.to_s.green})"
+        end
+
+        puts "\nRe-run the command with the artist ID:\n"
+        puts "./bin/mj genius list_songs <artist_id>"
+      end
 
       def api_client
         ApiClient.new(

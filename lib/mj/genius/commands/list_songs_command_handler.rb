@@ -9,6 +9,16 @@ module Mj
       class ListSongsCommandHandler
         PER_PAGE = 50
 
+        class AmbiguousArtistError < StandardError
+          attr_accessor :artist_name, :artists
+
+          def initialize(artist_name, artists)
+            @artist_name = artist_name
+            @artists = artists
+            super("Ambiguous artist name: \"#{artist_name}\". Possible matches: #{artists.map(&:name).join(", ")}")
+          end
+        end
+
         def initialize(stdout:, api_client:)
           @stdout = stdout
           @api_client = api_client
@@ -50,7 +60,7 @@ module Mj
           end
 
           if artists.size > 1
-            return display_ambiguous_artists(artist_name, artists)
+            raise AmbiguousArtistError.new(artist_name, artists)
           end
 
           if artists.any?
@@ -58,19 +68,6 @@ module Mj
           end
 
           @stdout.puts "No results found for artist: \"#{artist_name}\""
-        end
-
-        # TODO: Move to command
-        def display_ambiguous_artists(artist_name, artists)
-          @stdout.puts "Ambiguous artist name: \"#{artist_name}\"".red
-          @stdout.puts "Possible matches:\n"
-
-          artists.each do |artist|
-            @stdout.puts "- #{artist.name} (ID: #{artist.id.to_s.green})"
-          end
-
-          @stdout.puts "\nRe-run the command with the artist ID:\n"
-          @stdout.puts "./bin/mj genius list_songs <artist_id>"
         end
       end
     end

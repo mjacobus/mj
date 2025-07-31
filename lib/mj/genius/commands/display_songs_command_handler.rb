@@ -15,8 +15,12 @@ module Mj
           sorted_songs = command.songs.sort_by(&:title)
 
           @stdout.puts "Songs:\n"
+          total_songs = sorted_songs.length
+          padding = [total_songs.to_s.length, 1].max
+
           sorted_songs.each_with_index do |song, index|
-            @stdout.puts "#{index.next}. #{song.title}"
+            padded_index = format("%#{padding}d", index.next).rjust(padding)
+            @stdout.puts "#{padded_index}. #{song.title}"
           end
         end
       end

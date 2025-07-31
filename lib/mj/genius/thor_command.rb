@@ -10,7 +10,7 @@ require_relative "song"
 module Mj
   module Genius
     class ThorCommand < Thor
-      desc "list <artist_name_or_id>", "List songs by an artist"
+      desc "list_songs <artist_name_or_id>", "List songs by an artist"
       option :format, type: :string, banner: "Format table or plain", aliases: :f
       def list_songs(artist_name_or_id)
         command = Commands::ListSongs.new(artist: artist_name_or_id, options: options)

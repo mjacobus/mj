@@ -3,6 +3,8 @@
 require_relative "api_client"
 require_relative "commands/list_songs"
 require_relative "commands/list_songs_command_handler"
+require_relative "commands/display_songs"
+require_relative "commands/display_songs_command_handler"
 require_relative "song"
 
 module Mj
@@ -17,20 +19,12 @@ module Mj
         )
         songs = handler.handle(command)
 
-        display_songs(songs)
+        display_command = Commands::DisplaySongs.new(songs: songs)
+        display_handler = Commands::DisplaySongsCommandHandler.new(stdout: $stdout)
+        display_handler.handle(display_command)
       end
 
       private
-
-      # TODO: move to a command
-      def display_songs(songs)
-        sorted_songs = songs.sort_by(&:title)
-
-        $stdout.puts "Songs:\n"
-        sorted_songs.each_with_index do |song, index|
-          $stdout.puts "#{index.next}. #{song.title}"
-        end
-      end
 
       def api_client
         ApiClient.new(

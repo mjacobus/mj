@@ -10,6 +10,7 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
   let(:system_test) { "test/system/foos/bars_test.rb" }
   let(:controller_test) { "test/controllers/foos/bars_controller_test.rb" }
   let(:integration_spec) { "spec/integration/foos/bars_controller_spec.rb" }
+  let(:integration_with_controller_spec) { "spec/integration/controllers/foos/bars_controller_spec.rb" }
   let(:integration_test) { "test/integration/foos/bars_controller_test.rb" }
   let(:controller) { "app/controllers/foos/bars_controller.rb" }
 
@@ -79,6 +80,18 @@ RSpec.describe Mj::AlternativeFile::Resolvers::Ruby::RailsControllerResolver do
     result = resolve(controller)
 
     expect(result).to include(create_candidate(integration_spec, "integration_spec"))
+  end
+
+  it "resolves controller integration with controller subfolder spec" do
+    result = resolve(controller)
+
+    expect(result).to include(create_candidate(integration_with_controller_spec, "integration_spec"))
+  end
+
+  it "resolves controller integration with controller subfolder spec" do
+    result = resolve(integration_with_controller_spec)
+
+    expect(result).to include(create_candidate(controller, "controller"))
   end
 
   it "resolves controller from integration test" do

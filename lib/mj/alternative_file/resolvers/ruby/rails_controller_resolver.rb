@@ -42,6 +42,9 @@ module Mj
           def add_integration_test(file, candidates, type)
             path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
             add_candidate("#{type}/integration/#{path}_#{type}.rb", "integration_#{type}", to: candidates)
+
+            path = file.without_prefix("app/controllers").without_suffix(".rb").trim_slashes
+            add_candidate("#{type}/integration/controllers/#{path}_#{type}.rb", "integration_#{type}", to: candidates)
           end
 
           def add_request_test(file, candidates, type)
@@ -68,6 +71,7 @@ module Mj
             end
 
             controller_path = file.sub("test/integration", "app/controllers")
+              .sub("spec/integration/controllers", "app/controllers")
               .sub("spec/integration", "app/controllers")
               .sub("spec/controllers", "app/controllers")
               .sub("test/controllers", "app/controllers")

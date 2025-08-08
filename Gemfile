@@ -17,3 +17,5 @@ gem "rubocop-rspec"
 gem "simplecov", require: false
 gem "simplecov-lcov", require: false
 gem "uri", "~> 0.13"
+gem "vcr", "~> 6.3"
+gem "webmock"

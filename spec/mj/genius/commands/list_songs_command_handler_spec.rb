@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 RSpec.describe Mj::Genius::Commands::ListSongsCommandHandler do
-  subject(:handler) { described_class.new(stdout: $stdout, api_client: api_client) }
+  subject(:handler) { described_class.new(api_client: api_client) }
 
   let(:command) { Mj::Genius::Commands::ListSongs.new(artist: "Mallu Magalhães", options: {}) }
   let(:songs) { handler.handle(command).sort_by(&:title) }

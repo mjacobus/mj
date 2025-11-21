@@ -6,6 +6,7 @@ require_relative "alternative_file/thor_command"
 require_relative "graphql/thor_command"
 require_relative "chatgpt/thor_command"
 require_relative "git/thor_command"
+require_relative "genius/thor_command"
 
 module Mj
   class Cli < Thor
@@ -29,5 +30,8 @@ module Mj
 
     desc "git", "Git utilities"
     subcommand "git", Git::ThorCommand
+
+    desc "genius", "Genius music search"
+    subcommand "genius", Genius::ThorCommand
   end
 end

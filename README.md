@@ -1,203 +1,57 @@
 # Mj
 
-A collection of useful commands for my personal use.
+A collection of useful CLI commands for software development workflow automation.
 
 [![Ruby](https://github.com/mjacobus/mj/actions/workflows/main.yml/badge.svg)](https://github.com/mjacobus/mj/actions/workflows/main.yml)
 [![Coverage Status](https://coveralls.io/repos/github/mjacobus/mj/badge.svg?branch=main)](https://coveralls.io/github/mjacobus/mj?branch=main)
 [![Maintainability](https://api.codeclimate.com/v1/badges/52468dead5a8c7568a0f/maintainability)](https://codeclimate.com/github/mjacobus/mj/maintainability)
 
+## Features
+
+- **Alternative File Navigation** - Quickly navigate between related files (specs, implementations, views)
+- **Git Utilities** - Smart branch checkout and stale branch cleanup
+- **GraphQL Client** - Execute GraphQL queries from files with headers and variables
+- **ChatGPT Integration** - CLI access to ChatGPT with custom configurations
+
 ## Installation
 
-Add this line to your application's Gemfile:
+Install the gem:
+
+```bash
+gem install mj
+```
+
+Or add to your Gemfile:
 
 ```ruby
 gem 'mj'
 ```
 
-And then execute:
-
-    bundle install
-
-Or install it yourself as:
-
-    gem install mj
-
-## Usage
+## Quick Start
 
 ```bash
+# Get help
 mj help
+
+# List available commands
+mj help alternative_file
+mj help git
+mj help graphql
+mj help chatgpt
+
+# Quick examples
+mj alternative_file list app/models/user.rb
+mj git checkout feature-branch
+mj graphql query_file query.graphql
+mj chatgpt ask "What is Ruby?"
 ```
 
-### Git
+## Documentation
 
-```
-bundle exec mj git checkout partial-branch-name           # it will create a local branch if that is remote only
-bundle exec mj git checkout partial-branch-name --dry-run # if you want to see the command before executing
-
-bundle exec mj git delete_stale_branches \
-  [--dry-run] \
-  [--only-with-prs] \
-  [--only-with-closed-prs] \
-  [--from-commiters=emal@one,email@two] \
-  [--from-pull_requestors=mjacobus,other-gh-username] \
-  [--after-date=2021-01-01] \
-  [--before-date=2021-01-01]
-```
-
-```
-
-### ChatGPT
-
-```
-
-bundle exec mj chatgpt ask "Who won the World Cup in 1994?" --request-file samples/chatgpt/football-team.yml | jq
-
-```
-
-Where the config file looks like:
-
-```yaml
-request:
-  parameters:
-    model: gpt-3.5-turbo-16k
-    temperature: 0.1
-    messages:
-    - role: system
-      content: You re an expert in futebool history.
-```
-
-Response:
-
-```json
-{
-  "id": "chatcmpl-90a0HhlOIqYkMPRbuICPy5m798yjQ",
-  "object": "chat.completion",
-  "created": 1709925425,
-  "model": "gpt-3.5-turbo-16k-0613",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "assistant",
-        "content": "The World Cup in 1994 was won by the Brazilian national team. They defeated Italy in the final match, which was held at the Rose Bowl stadium in Pasadena, California, United States. The match ended in a 0-0 draw after extra time, and Brazil won the penalty shootout 3-2 to claim their fourth World Cup title."
-      },
-      "logprobs": null,
-      "finish_reason": "stop"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 31,
-    "completion_tokens": 71,
-    "total_tokens": 102
-  },
-  "system_fingerprint": null
-}
-```
-
-You can also do `jq '.choices[0].message.content'`:
-
-```sh
-mj chatgpt ask "Who won the World Cup in 1994?" \
-  --config-file samples/chatgpt/football-team.yml | jq '.choices[0].message.content'
-
-# "The World Cup in 1994 was won by the Brazilian national team. They defeated Italy in the final match, which was held at the Rose Bowl stadium in Pasadena, California, United States. The match ended in a 0-0 draw after extra time, and Brazil won the penalty shootout 3-2 to claim their fourth World Cup title."
-```
-
-### GraphQl
-
-```
-bundle exec mj graphql query_file AccountUsers.graphql | jq
-```
-
-Your graqphql fiel is a regular file with variables at the top:
-
-```graphql
-# gql-endpoint: http://api.myapi.me/graphql
-# gql-header: Authorization: Bearer cb923f33617877578961a19cf4566ec2
-# gql-header: Content-Type: application/json
-# gql-variables: { "input": { "id": "some-id" } }
-
-query QueryAccountUsers(
-  $input: AccountInput!
-) {
-  account(input: $input) {
-    users {
-      id
-      name
-    }
-    errors {
-      path
-      message
-    }
-  }
-}
-```
-
-### Alternative file
-
-Examples:
-
-```
-$ mj alternative_file list app/components/attribute_component.rb
-app/components/attribute_component.html.erb
-app/components/attribute_component.rb
-lib/components/attribute_component.rb
-spec/components/attribute_component_spec.rb
-test/components/attribute_component_test.rb
-
-$ mj alternative_file list app/components/attribute_component.rb  --exists
-app/components/attribute_component.html.erb
-app/components/attribute_component.rb
-spec/components/attribute_component_spec.rb
-
-$ mj alternative_file list app/components/attribute_component.rb  --types=spec
-spec/components/attribute_component_spec.rb
-
-$ mj alternative_file next app/components/attribute_component.rb
-lib/components/attribute_component.rb
-
-$ mj alternative_file prev app/components/attribute_component.rb
-app/components/attribute_component.html.erb
-```
-
-Why? Because you can integrate that command with your IDE/Text Editor. For instance, here's my [neovim integration](https://github.com/mjacobus/dotfiles/blob/d8ceda659dc9b587ab22b05fc15eac2fa5b477d7/neovim/.config/nvim/init.lua#L31-L63):
-
-```lua
-vimp.nnoremap('<leader>ak', function()
-  open_mj_alternative_file('next', '--exists')
-end)
-
-vimp.nnoremap('<leader>aj', function()
-  open_mj_alternative_file('prev', '--exists')
-end)
-
-function open_mj_alternative_file(subcommand, options)
-  file_path = vim.fn.expand('%')
-  files = mj_alternative_file(file_path, subcommand, options)
-  files = vim.split(files, ' ')
-  file = files[1]
-
-
-  if file ~= '' then
-    vim.api.nvim_command('e ' .. file)
-  end
-end
-
-function mj_alternative_file(file, subcommand, options)
-  local cmd = 'mj alternative_file ' .. subcommand .. ' ' .. file .. ' ' .. options
-  return execute_command(cmd)
-end
-
-function execute_command(cmd)
-  print("cmd: " .. cmd)
-  local f = io.popen(cmd)
-  local s = f:read('*a')
-  f:close()
-  return s
-end
-```
-
-This way I can use `<leader>a{direction}`, where `k` is `next`, and `j` is `previous` alternative file.
+- [Alternative File Navigation](docs/alternative_file.md) - Navigate between specs, implementations, and views
+- [Git Utilities](docs/git.md) - Branch management and cleanup tools
+- [GraphQL Client](docs/graphql.md) - Execute GraphQL queries from files
+- [ChatGPT Integration](docs/chatgpt.md) - CLI access to ChatGPT
 
 ## Development
 

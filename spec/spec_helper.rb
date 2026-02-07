@@ -24,6 +24,13 @@ if ENV["CI"] || ENV["COVERAGE"]
 end
 
 require "mj"
+require "vcr"
+
+VCR.configure do |config|
+  config.cassette_library_dir = "spec/vcr_cassettes"
+  config.hook_into :webmock
+  config.filter_sensitive_data("<GENIUS_ACCESS_TOKEN>") { ENV.fetch("GENIUS_ACCESS_TOKEN", nil) }
+end
 
 require_relative "support/alternative_file_spec_helper"
 
